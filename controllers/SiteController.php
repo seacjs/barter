@@ -2,15 +2,16 @@
 
 namespace app\controllers;
 
+use app\models\SignupForm;
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
+use yii\helpers\VarDumper;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
-class SiteController extends Controller
+class SiteController extends FrontController
 {
     /**
      * {@inheritdoc}
@@ -19,14 +20,27 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'class' => AccessControl::class,
+                'only' => ['logout','index'],
                 'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'denyCallback' => function ($rule, $action){
+                            return $action->controller->redirect('/profile');
+                        }
+                    ]
                 ],
             ],
             'verbs' => [
@@ -46,6 +60,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'layout' => 'guest'
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -61,7 +76,25 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->layout = 'guest';
+        $authFormModel = new LoginForm();
+        if ($authFormModel->load(Yii::$app->request->post()) && $authFormModel->login()) {
+            return $this->goBack();
+        }
+
+        $signUpFormModel = new SignupForm();
+        if ($signUpFormModel->load(Yii::$app->request->post())) {
+            if ($user = $signUpFormModel->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('index', [
+            'authFormModel' => $authFormModel,
+            'signUpFormModel' => $signUpFormModel,
+        ]);
     }
 
     /**
@@ -82,6 +115,26 @@ class SiteController extends Controller
 
         $model->password = '';
         return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+    /**
+     * Login action.
+     *
+     * @return Response|string
+     */
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('signup', [
             'model' => $model,
         ]);
     }
@@ -123,6 +176,56 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+        $this->layout = 'guest';
         return $this->render('about');
+    }
+
+    /**
+     * Requests password reset.
+     *
+     * @return mixed
+     */
+    public function actionRequestPasswordReset()
+    {
+        $model = new PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+            }
+        }
+
+        return $this->render('requestPasswordResetToken', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Resets password.
+     *
+     * @param string $token
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionResetPassword($token)
+    {
+        try {
+            $model = new ResetPasswordForm($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+            Yii::$app->session->setFlash('success', 'New password saved.');
+
+            return $this->goHome();
+        }
+
+        return $this->render('resetPassword', [
+            'model' => $model,
+        ]);
     }
 }

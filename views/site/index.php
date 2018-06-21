@@ -4,50 +4,55 @@
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
+<main id="tg-main" class="tg-main tg-haslayout">
+    <div class="container">
+        <p><strong>Зарегистрируйтесь или авторизуйтесь на портале и оставайтесь в курсе новостей Ваших друзей или партнеров, где бы Вы ни находились.</strong></p>
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            <div id="tg-content" class="tg-content">
+                <div class="tg-loginsignup">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <div class="tg-logingarea">
+                            <h2>Авторизация</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                            <?=$this->render('/forms/authForm', [
+                                'authFormModel' => $authFormModel,
+                            ])?>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                        </div>
+                        <div class="tg-texbox">
+                            <p><strong>Зарегистрируйтесь или авторизуйтесь на портале и оставайтесь в курсе новостей Ваших друзей или партнеров, где бы Вы ни находились.</strong></p>
+                            <p>Quis nostrud exercitation ullamcoaris nisiuate aliquip ex ea commodo consequat aute irure dolor atem reprehenderit in esse.</p>
+                            <ul>
+                                <li>Proident sunt in culpa qui officia</li>
+                                <li>Deserunt mollit anim idestorum</li>
+                                <li>Sedutana perspiciatis</li>
+                                <li>Aunde omnis iste natus voluptatem</li>
+                                <li>Cullamcoaris nisiutia aliquip</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                        <div class="tg-videobox">
+                            <figure>
+                                <img src="images/placeholder-02.jpg" alt="image description">
+                                <a class="tg-btnplayvideo" href="javascript:void(0);"><i class="icon-play3"></i></a>
+                            </figure>
+                        </div>
+                        <div class="tg-title">
+                            <h2>Регистрация</h2>
+                        </div>
+                        <div class="tg-haslayout">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                                    <?= $this->render('/forms/signUpForm', [
+                                        'signUpFormModel' => $signUpFormModel
+                                    ]);?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
+</main>
