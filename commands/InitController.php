@@ -7,9 +7,12 @@
 
 namespace app\commands;
 
+use app\models\City;
+use app\models\User;
 use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
+use yii\helpers\Console;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -38,10 +41,11 @@ class InitController extends Controller
      */
     public function actionData()
     {
-        $this->initUsersData();
         $this->initRbacData();
+        $this->initCityData();
+        $this->initUsersData();
 
-        echo "First data initialised.\n";
+        $this->stdout("First data initialised. Done.\n", Console::FG_GREEN);
 
         return ExitCode::OK;
     }
@@ -51,8 +55,58 @@ class InitController extends Controller
      */
     public function initUsersData()
     {
+        if(YII_ENV_DEV) {
 
-        echo "User data initialised.\n";
+            $auth = Yii::$app->authManager;
+            $userRole = $auth->getRole('user');
+            $adminRole = $auth->getRole('admin');
+            $superAdminRole = $auth->getRole('superAdmin');
+
+            $user = new User();
+            $user->username = 'user';
+            $user->setPassword('111');
+            $user->email = 'user@barter.dev';
+            $user->save();
+            $user->profile->city_id = 1;
+            $user->profile->save();
+
+            $auth->assign($userRole, $user->id);
+
+            $admin = new User();
+            $admin->username = 'admin';
+            $admin->setPassword('111');
+            $admin->email = 'admin@barter.dev';
+            $admin->save();
+            $admin->profile->city_id = 1;
+            $admin->profile->save();
+
+            $auth->assign($adminRole, $admin->id);
+
+            $superAdmin = new User();
+            $superAdmin->username = 'superAdmin';
+            $superAdmin->setPassword('111');
+            $superAdmin->email = 'superAdmin@barter.dev';
+            $superAdmin->save();
+            $superAdmin->profile->city_id = 1;
+            $superAdmin->profile->save();
+
+            $auth->assign($superAdminRole, $superAdmin->id);
+
+            $this->stdout("User data initialised. Done.\n", Console::FG_GREEN);
+        }
+    }
+    /**
+     * Init users data
+     */
+    public function initCityData()
+    {
+        if(YII_ENV_DEV) {
+            $city = new City();
+            $city->name = 'Санкт-Петербург';
+            $city->slug = 'spb';
+            $city->save();
+            $this->stdout("City data initialised. Done.\n", Console::FG_GREEN);
+        }
     }
     /**
      * Init RBAC system
@@ -64,10 +118,6 @@ class InitController extends Controller
         /* now default roles */
         /* in next version will be updating */
 
-        /*
-         * todo: Add roles
-         * admin, developer, superAdmin, user
-         * */
 
         //creating post
         $createProduct = $auth->createPermission('createProduct');
@@ -103,5 +153,14 @@ class InitController extends Controller
         $auth->add($admin);
         $auth->addChild($admin, $user);
         $auth->addChild($admin, $deleteUser);
+
+        //create role 'super admin' and add permissions
+        $superAdmin = $auth->createRole('superAdmin');
+        $superAdmin->description = 'Super Administrator';
+        $auth->add($superAdmin);
+        $auth->addChild($superAdmin, $admin);
+        $auth->addChild($superAdmin, $deleteUser);
+
+        $this->stdout("RBAC data initialised.\n", Console::FG_GREEN);
     }
 }
