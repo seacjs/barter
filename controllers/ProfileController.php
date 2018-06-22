@@ -43,11 +43,22 @@ class ProfileController extends FrontController
 
         $model = $user->profile;
         if($model->load($post) && $model->validate()) {
-
+            $model->save();
         }
 
         return $this->render('update', [
             'model' => $model,
+        ]);
+    }
+    public function actionUsers()
+    {
+        $users = \app\models\User::find()
+            ->where([
+                'not in', 'id', Yii::$app->user->id
+            ])->all();
+
+        return $this->render('users', [
+            'users' => $users,
         ]);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2mod\rbac\commands;
+namespace app\commands;
 
 use yii\console\controllers\BaseMigrateController;
 use yii\db\Connection;

@@ -1,21 +1,31 @@
 console.log('profile.js start');
 
+
+
     checkNewMessages();
 
     setInterval(function(){
         checkNewMessages();
     }, 3000);
 
+    var disableButton = false;
+
     function checkNewMessages() {
-        var countNewMessages = 0;
+
         $.ajax({
             url: "/messages/ajax-count-new-message",
             success: function(result) {
-                var countNewMessages = JSON.parse(result);
-                console.log(parseInt(countNewMessages));
+
+                var countNewMessages = parseInt(JSON.parse(result));
+                $('#refreshButton').click();
+
+                console.log(countNewMessages,parseInt(JSON.parse(result)));
                 $('#count-new-messages').html(countNewMessages);
             }
         });
+        if(!disableButton) {
+            //$('#refreshButton').click();
+        }
     }
 
 console.log('profile.js finish');

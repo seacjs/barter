@@ -6,6 +6,7 @@ use app\models\Message;
 use Yii;
 use app\models\User;
 use yii\db\Query;
+use yii\helpers\VarDumper;
 use yii\web\Response;
 
 class MessagesController extends FrontController
@@ -31,15 +32,18 @@ class MessagesController extends FrontController
         $users_ids = array_unique($users_ids);
         $value_to_delete = Yii::$app->user->id;
         $users_ids = array_flip($users_ids);
+        $users_ids_with_me = $users_ids;
         unset($users_ids[$value_to_delete]);
         $users_ids = array_flip($users_ids);
+        $users_ids_with_me = array_flip($users_ids_with_me);
         $dialogs = [];
 
         /* todo: with images */
         $users = User::Find()
-            ->where(['in', 'id', $users_ids])
+            ->where(['in', 'id', $users_ids_with_me])
             ->indexBy('id')
             ->all();
+//        VarDumper::dump($users,10,1);die;
 
         foreach($users_ids as $key => $user_id) {
 
@@ -61,7 +65,7 @@ class MessagesController extends FrontController
         }
 
         return $this->render('index', [
-            'user' => Yii::$app->user->identity->id,
+            'user' => Yii::$app->user->identity,
             'users' => $users,
             'dialogs' => $dialogs
         ]);
@@ -72,7 +76,19 @@ class MessagesController extends FrontController
         $this->view->registerAssetBundle('app\assets\ChatAsset');
         /* todo: add this layout */
 //        $this->layout = 'messages';
-        $messages = [];
+        $messages = Message::find()
+            ->where([
+                'to' => Yii::$app->user->id,
+                'from' => $id
+            ])
+            ->orWhere([
+                'to' => $id,
+                'from' => Yii::$app->user->id
+            ])
+            ->orderBy(['id' => SORT_ASC])
+            ->limit(50)
+            ->all();
+
         $user = User::findOne($id);
 
         return $this->render('view', [
@@ -85,11 +101,17 @@ class MessagesController extends FrontController
     {
         /* todo: add access filter to this controller */
         Yii::$app->response->format = Response::FORMAT_JSON;
-        return json_encode(
-            Message::find()->where([
-                'to' => Yii::$app->user->id
-            ])->count()
-        );
+        $messages = count(Message::find()
+            ->where([
+                'to' => Yii::$app->user->id,
+                'status' => Message::STATUS_NEW
+            ])->andWhere([
+                'not in', 'from', [Yii::$app->user->id]
+            ])
+            ->indexBy('from')
+            ->asArray()
+            ->all());
+        return json_encode($messages);
     }
 
 }

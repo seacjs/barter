@@ -35,8 +35,8 @@
 
             <?php foreach($messages as $message): ?>
 
-                <?= $this->render('/messages/_message',[
-                    'message' => $message,
+                <?= $this->render('/messages/_message', [
+                    'model' => $message,
                     'me' => $message->from === Yii::$app->user->id
                 ]);?>
 

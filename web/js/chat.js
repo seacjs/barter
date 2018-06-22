@@ -8,7 +8,12 @@
  * */
 //$(function() {
     console.log('chat server start');
+
+    //var chat = new WebSocket('ws://barter.tmweb.ru:8080');
     var chat = new WebSocket('ws://barter:8080');
+
+    var messagesList = document.getElementById("chat");
+    messagesList.scrollTop = messagesList.scrollHeight;
 
     chat.onmessage = function(e) {
         $('#response').text('');
@@ -25,6 +30,8 @@
         } else if (response.message) {
             $('#response').text(response.message);
         }
+        var messagesList = document.getElementById("chat");
+        messagesList.scrollTop = messagesList.scrollHeight;
         console.log(response.message);
     };
 
@@ -48,6 +55,9 @@
                 }));
                 $('#message').val('');
                 $('#message').focus();
+
+                var messagesList = document.getElementById("chat");
+                messagesList.scrollTop = messagesList.scrollHeight;
             }
 
         }
@@ -57,6 +67,9 @@
         if(e.keyCode==13) {
             $('#message').val('');
             $('#message').focus();
+
+            var messagesList = document.getElementById("chat");
+            messagesList.scrollTop = messagesList.scrollHeight;
         }
     });
 

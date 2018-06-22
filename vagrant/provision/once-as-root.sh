@@ -35,11 +35,11 @@ apt-get install -y php7.0-curl php7.0-cli php7.0-intl php7.0-mysqlnd php7.0-gd p
 
 info "Configure MySQL"
 sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
-mysql -uroot <<< "CREATE USER 'root'@'%' IDENTIFIED BY ''"
-mysql -uroot <<< "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'"
-mysql -uroot <<< "DROP USER 'root'@'localhost'"
-mysql -uroot <<< "FLUSH PRIVILEGES"
-echo "Done!"
+            mysql -uroot <<< "CREATE USER 'root'@'%' IDENTIFIED BY ''"
+            mysql -uroot <<< "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'"
+            mysql -uroot <<< "DROP USER 'root'@'localhost'"
+            mysql -uroot <<< "FLUSH PRIVILEGES"
+            echo "Done!"
 
 info "Configure PHP-FPM"
 sed -i 's/user = www-data/user = vagrant/g' /etc/php/7.0/fpm/pool.d/www.conf
