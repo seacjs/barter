@@ -44,10 +44,6 @@ use yii\widgets\ActiveForm;
                     <td><?= $form->field($model, 'show_skype')->checkbox() ?></td>
                 </tr>
                 <tr>
-                    <td><?= $form->field($model, 'city_id') ?></td>
-                    <td><?= $form->field($model, 'show_city')->checkbox() ?></td>
-                </tr>
-                <tr>
                     <td></td>
                     <td><?= $form->field($model, 'show_email')->checkbox() ?></td>
                 </tr>

@@ -3,12 +3,12 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "message".
  *
  * @property int $id
- * @property int $created_at
  * @property string $message
  * @property int $from
  * @property int $to
@@ -26,6 +26,16 @@ class Message extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+//    public function behaviors()
+//    {
+//        return [
+//            TimestampBehavior::className(),
+//        ];
+//    }
+
+    /**
+     * {@inheritdoc}
+     */
     public static function tableName()
     {
         return 'message';
@@ -37,8 +47,9 @@ class Message extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at'], 'required'],
-            [['created_at', 'from', 'to', 'status'], 'integer'],
+//            [['created_at'], 'required'],
+//            [['created_at'], 'integer'],
+            [['from', 'to', 'status'], 'integer'],
             [['message'], 'string', 'max' => 255],
         ];
     }
@@ -50,7 +61,6 @@ class Message extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'created_at' => 'Created At',
             'message' => 'Message',
             'from' => 'From',
             'to' => 'To',

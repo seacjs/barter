@@ -64,10 +64,12 @@ class ChatServer extends WebSocketServer
             $messageModel->from = $userFrom->id;
             $messageModel->to = $userTo->id;
             $messageModel->message = $message;
+            $messageModel->created_at = time();
             $messageModel->status = Message::STATUS_NEW;
             $messageModel->setUserFrom($userFrom);
             $messageModel->setUserTo($userTo);
-//            $messageModel->save();
+            $messageModel->validate();
+            $messageModel->save();
 
             foreach($this->clients as $chatClient) {
                 if(($chatClient->user_id === $userFrom->id) || ($chatClient->user_id === $userTo->id)) {
@@ -80,6 +82,7 @@ class ChatServer extends WebSocketServer
                             'model' => $messageModel
                         ]),
                     ]));
+
                 }
             }
         } else {

@@ -28,7 +28,12 @@
                                     <li class="menu-item">
                                         <a href="/profile/update">Личный кабинет</a>
                                     </li>
+                                    <li class="menu-item">
+                                        <a href="/profile/users">Другие пользователи</a>
+                                    </li>
                                 <?php endif ?>
+
+
 <!--                                <li class="menu-item">-->
 <!--                                    <a href="/site/about">Расчетный отдел</a>-->
 <!--                                </li>-->
