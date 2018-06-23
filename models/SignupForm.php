@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 use app\models\User;
 
@@ -14,6 +15,8 @@ class SignupForm extends Model
     public $password;
     public $repeatPassword;
     public $confirmTerms = false;
+
+    public $complited = false;
 
     /**
      * {@inheritdoc}
@@ -35,8 +38,8 @@ class SignupForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
-            ['repeatPassword', 'required'],
-            ['repeatPassword', 'string'],
+//            ['repeatPassword', 'required'],
+//            ['repeatPassword', 'string'],
 
             ['confirmTerms', 'boolean'],
         ];
@@ -58,18 +61,35 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+//        $user->generateEmailConfirmToken();
+
+        if($user->save()) {
+            $this->complited = true;
+            $auth = Yii::$app->authManager;
+            $userRole = $auth->getRole('user');
+            $auth->assign($userRole, $user->getId());
+
+            $this->sendEmailConfirmationCode($user);
+            
+            Yii::$app->session->addFlash('reg', 'Вы зарегистрированы, на ваш email отправлено письмо для подтверждения регистрации.');
+            return $user;
+        }
         
-        return $user->save() ? $user : null;
+        return null;
     }
 
     /**
      * Send email confirmation code
      *
      */
-    public function sendEmailConfirmationCode()
+    public function sendEmailConfirmationCode($user)
     {
 
-
+//        Yii::$app->mailer->compose(['html' => '@app/mail/emailConfirm'], ['user' => $user])
+//            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
+//            ->setTo($this->email)
+//            ->setSubject(Yii::t('app','Email confirmation for ') . Yii::$app->name)
+//            ->send();
 
     }
 

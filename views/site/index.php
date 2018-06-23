@@ -44,9 +44,13 @@ $this->title = 'My Yii Application';
                         <div class="tg-haslayout">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                                    <?= $this->render('/forms/signUpForm', [
-                                        'signUpFormModel' => $signUpFormModel
-                                    ]);?>
+                                    <?php if($signUpFormModel->complited):?>
+                                        <p>Вы зарегистрированы, на ваш email отправлено письмо для подтверждения регистрации.</p>
+                                    <?php else: ?>
+                                        <?= $this->render('/forms/signUpForm', [
+                                            'signUpFormModel' => $signUpFormModel
+                                        ]);?>
+                                    <?php endif ?>
                                 </div>
                             </div>
                         </div>
