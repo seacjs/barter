@@ -19,6 +19,16 @@ use yii\bootstrap\Html;
 ]); ?>
     <fieldset>
 
+        <?= $form->field($signUpFormModel, 'username',[
+            'options' => [
+                'class' => 'form-group tg-inputwithicon',
+            ],
+            'template' => "<i class=\"icon-user\"></i>{input}\n{error}",
+        ])->textInput([
+            'placeholder' => "Enter Your Username",
+            'autofocus' => false,
+        ]) ?>
+
         <?= $form->field($signUpFormModel, 'email',[
             'options' => [
                 'class' => 'form-group tg-inputwithicon',
@@ -39,15 +49,15 @@ use yii\bootstrap\Html;
             'autofocus' => false,
         ]) ?>
 
-        <?= $form->field($signUpFormModel, 'repeatPassword',[
-            'options' => [
-                'class' => 'form-group tg-inputwithicon',
-            ],
-            'template' => "<i class=\"icon-lock\"></i>{input}\n{error}",
-        ])->passwordInput([
-            'placeholder' => "Repeat Password",
-            'autofocus' => false,
-        ]) ?>
+<!--       //= $form->field($signUpFormModel, 'repeatPassword',[
+//            'options' => [
+//                'class' => 'form-group tg-inputwithicon',
+//            ],
+//            'template' => "<i class=\"icon-lock\"></i>{input}\n{error}",
+//        ])->passwordInput([
+//            'placeholder' => "Repeat Password",
+//            'autofocus' => false,
+//        ])  -->
 
         <?= $form->field($signUpFormModel, 'confirmTerms')->checkbox([
             'id' => 'confirmTerms',
