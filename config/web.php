@@ -47,7 +47,7 @@ $config = [
 //                'charset' => 'UTF-8',
 //                'from' => ['support@dubl.com' => 'Dubl'],
 //            ],
-            'useFileTransport' => true, // remove this on server
+            'useFileTransport' => false, // remove this on server
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
