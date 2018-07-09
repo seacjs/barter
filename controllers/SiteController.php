@@ -237,6 +237,7 @@ class SiteController extends FrontController
      */
     public function actionConfirmEmail($token)
     {
+        $this->layout = 'guest';
         $user = User::findByEmailConfirmToken($token);
 
         $message = '';
