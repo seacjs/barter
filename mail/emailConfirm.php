@@ -8,6 +8,6 @@
 
 ?>
 
-Вы зарегистрированы на сайте.<br>
+Вы зарегистрированы на сайте <?=Yii::$app->params['site']?>.<br>
 Перейдите по ссылке, для подтверждения регистрации.<br>
-<a href="<?=Yii::$app->params['site']?>/site/confirm">подтвердить</a>
+<a href="<?=Yii::$app->params['site']?>/site/confirm-email/<?=$user->email_confirm_token?>">подтвердить</a>

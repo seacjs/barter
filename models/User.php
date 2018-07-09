@@ -14,6 +14,7 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
+ * @property string $email_confirm_token
  * @property string $email
  * @property string $auth_key
  * @property integer $status
@@ -31,6 +32,73 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_BLOCKED = 2;
     const STATUS_ACTIVE = 10;
 
+    /**
+     * Get user statuses as array
+     *
+     * @return array
+     */
+    public static function getStatusesArray()
+    {
+        return [
+            self::STATUS_DELETED => 'Удаленный',
+            self::STATUS_NEW => 'Новый',
+            self::STATUS_BLOCKED => 'Заблокированый',
+            self::STATUS_ACTIVE  => 'Активный',
+        ];
+    }
+
+    public $sendEmailToUserWithData = false;
+    public $role;
+
+    /**
+     * Get user roles throw authManager as array
+     *
+     * @return array
+     */
+    public static function getRolesArray()
+    {
+        $result = [];
+        foreach(Yii::$app->authManager->getRoles() as $role)
+        {
+            $result[$role->name] = $role->description;
+        }
+        return $result;
+    }
+
+    /**
+     * Get user child roles without current user role, throw authManager as array
+     *
+     * @return array
+     */
+    public static function getChildRolesArray()
+    {
+        $result = [];
+        $userRoles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+        foreach($userRoles as $key => $value) {
+            foreach (Yii::$app->authManager->getChildRoles($key) as $role) {
+                if ($key !== $role->name) {
+                    $result[$role->name] = $role->description;
+                }
+            }
+        }
+        return $result;
+    }
+
+
+
+
+    /**
+     * Remove all roles and add $newRoleName
+     *
+     * @param string $newRoleName
+     * */
+    public function changeRole($newRoleName)
+    {
+        $auth = Yii::$app->authManager;
+        $auth->removeAllRoles();
+        $newRole = $auth->getRole($newRoleName);
+        $auth->assign($newRole, $this->id);
+    }
 
     /**
      * {@inheritdoc}
@@ -56,8 +124,21 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['username', 'trim'],
+            ['username', 'required'],
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
+
+            ['email', 'trim'],
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
+
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => array_keys(self::getStatusesArray())],
+
+            [['sendEmailToUserWithData', 'role'], 'safe'],
         ];
     }
 
@@ -196,12 +277,37 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Generates new email confirm token
+     */
+    public function generateEmailConfirmToken()
+    {
+        $this->email_confirm_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * Removes email confirm token
+     */
+    public function removeEmailConfirmToken()
+    {
+        $this->email_confirm_token = null;
+    }
+
+    public static function findByEmailConfirmToken($token)
+    {
+        return static::findOne([
+            'email_confirm_token' => $token,
+        ]);
+    }
+
+    /**
      * @inheritdoc
      */
     public function getProfile()
     {
         return $this->hasOne(Profile::class, ['user_id' => 'id']);
     }
+
+
 
     /**
      * @inheritdoc

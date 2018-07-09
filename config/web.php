@@ -7,11 +7,20 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'name' => 'Dubl',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'assetManager' => [
+//            'linkAssets' => true,
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],
+                ],
+            ]
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -24,16 +33,29 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['/'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+//            'viewPath' => '@app/mail',
+//            'htmlLayout' => 'layouts/html',
+//            'textLayout' => 'layouts/text',
+//            'messageConfig' => [
+//                'charset' => 'UTF-8',
+//                'from' => ['support@dubl.com' => 'Dubl'],
+//            ],
+            'useFileTransport' => true, // remove this on server
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'dublbarter@gmail.com',
+                'password' => 'dublBarter1',
+                'port' => '587', // '587', '465'
+                'encryption' => 'tls', // ssl tls
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
