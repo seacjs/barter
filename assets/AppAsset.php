@@ -20,7 +20,12 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+//        'css/site.css',
+        'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
+        'https://cdn.linearicons.com/free/1.0.0/icon-font.min.css',
+        'https://fonts.googleapis.com/css?family=Quicksand:500',
+        'css/fonts.css',
+        'css/app.css',
     ];
     public $js = [
 //        'https://cdn.jsdelivr.net/npm/vue/dist/vue.js', // vue.js

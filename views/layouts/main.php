@@ -9,7 +9,7 @@ use app\assets\DublAsset;
 use app\assets\ChatAsset;
 
 AppAsset::register($this);
-DublAsset::register($this);
+//DublAsset::register($this);
 //ChatAsset::register($this);
 
 
@@ -28,23 +28,19 @@ DublAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrapper">
 
     <?=$this->render('header')?>
 
-    <div class="container">
+    <div class="content">
 
-        <div class="row">
-            <div class="col-sm-3"><?= \app\widgets\ProfileColumn::widget() ?></div>
-            <div class="col-sm-6"><?= $content ?></div>
-            <div class="col-sm-3"><?= \app\widgets\NotificationColumn::widget() ?></div>
-        </div>
+        <?= \app\widgets\ProfileColumn::widget() ?>
+
+        <?= $content ?>
 
     </div>
 
 </div>
-
-<?=$this->render('footer');?>
 
 <?php $this->endBody() ?>
 </body>

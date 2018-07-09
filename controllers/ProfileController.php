@@ -2,17 +2,42 @@
 
 namespace app\controllers;
 
+use app\models\Product;
 use app\models\User;
 use Yii;
 use app\models\Profile;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
 
 
 class ProfileController extends FrontController
 {
 
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index','view','update','users'],
+                'rules' => [
+                    [
+                        'actions' => ['index','view','update','users'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $model = Yii::$app->user->identity->profile;
+        return $this->redirect('/profile/update');
         return $this->render('view', [
             'model' => $model,
         ]);
@@ -42,16 +67,20 @@ class ProfileController extends FrontController
         }
 
         $model = $user->profile;
-        if($model->load($post) && $model->validate()) {
+        if($model->load($post) && $model->user->load($post) && $model->validate() && $model->user->validate()) {
             $model->save();
+            $model->user->save();
         }
+//        VarDumper::dump($model,10,1);die;
 
         return $this->render('update', [
             'model' => $model,
         ]);
     }
+
     public function actionUsers()
     {
+
         $users = \app\models\User::find()
             ->where([
                 'not in', 'id', Yii::$app->user->id
@@ -59,6 +88,18 @@ class ProfileController extends FrontController
 
         return $this->render('users', [
             'users' => $users,
+        ]);
+    }
+
+    public function actionProducts()
+    {
+
+        $products = Product::find()->where([
+            'user_id' => Yii::$app->user->id
+        ])->all();
+
+        return $this->render('products', [
+            'products' => $products,
         ]);
     }
 

@@ -11,6 +11,14 @@ class NotificationColumn extends Widget
      */
     public function run()
     {
+        if(Yii::$app->controller->id === 'profile' && (
+                Yii::$app->controller->action->id === 'users' ||
+                Yii::$app->controller->action->id === 'products'
+
+        )) {
+            return $this->render('user-search-column');
+
+        }
         return $this->render('notification-column');
     }
 }

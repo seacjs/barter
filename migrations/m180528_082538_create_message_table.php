@@ -12,6 +12,12 @@ class m180528_082538_create_message_table extends Migration
      */
     public function safeUp()
     {
+//        $this->createTable('{{%dialog}}', [
+//            'id' => $this->primaryKey(),
+//            'from' => $this->integer(),
+//            'to' => $this->integer(),
+//        ]);
+
         $this->createTable('{{%message}}', [
             'id' => $this->primaryKey(),
             'created_at' => $this->integer()->notNull(),
@@ -20,6 +26,8 @@ class m180528_082538_create_message_table extends Migration
             'from' => $this->integer(),
             'to' => $this->integer(),
             'status' => $this->smallInteger(),
+//            'dialog_id' => $this->integer(),
+//            'hash' => $this->string(),
         ]);
 
         $this->createTable('{{%message_ignorelist}}', [

@@ -7,7 +7,9 @@
 
 namespace app\commands;
 
+use app\models\Category;
 use app\models\City;
+use app\models\Region;
 use app\models\User;
 use Yii;
 use yii\console\Controller;
@@ -44,6 +46,7 @@ class InitController extends Controller
         $this->initRbacData();
         $this->initCityData();
         $this->initUsersData();
+        $this->initCategoryData();
 
         $this->stdout("First data initialised. Done.\n", Console::FG_GREEN);
 
@@ -101,11 +104,30 @@ class InitController extends Controller
     public function initCityData()
     {
         if(YII_ENV_DEV) {
+
+            $regionMoscow = new Region();
+            $regionMoscow->name = 'Московская область';
+            $regionMoscow->slug = 'moscow-oblast';
+            $regionMoscow->save();
+
+            $regionLen = new Region();
+            $regionLen->name = 'Ленинградская область';
+            $regionLen->slug = 'len-oblast';
+            $regionLen->save();
+
             $city = new City();
-            $city->name = 'Санкт-Петербург';
-            $city->slug = 'spb';
+            $city->name = 'Москва';
+            $city->slug = 'msk';
+            $city->region_id = $regionMoscow->id;
             $city->save();
-            $this->stdout("City data initialised. Done.\n", Console::FG_GREEN);
+
+            $city2 = new City();
+            $city2->name = 'Санкт-Петербург';
+            $city2->slug = 'spb';
+            $city2->region_id = $regionLen->id;
+            $city2->save();
+
+            $this->stdout("City and region data initialised. Done.\n", Console::FG_GREEN);
         }
     }
     /**
@@ -118,18 +140,17 @@ class InitController extends Controller
         /* now default roles */
         /* in next version will be updating */
 
-
-        //creating post
+        //creating
         $createProduct = $auth->createPermission('createProduct');
         $createProduct->description = 'Create Product';
         $auth->add($createProduct);
 
-        //deleting post
+        //deleting
         $deleteProduct = $auth->createPermission('deleteProduct');
         $deleteProduct->description = 'Delete Product';
         $auth->add($deleteProduct);
 
-        //update post
+        //update
         $updateProduct = $auth->createPermission('updateProduct');
         $updateProduct->description = 'Update Product';
         $auth->add($updateProduct);
@@ -147,11 +168,17 @@ class InitController extends Controller
         $auth->addChild($user, $deleteProduct);
         $auth->addChild($user, $updateProduct);
 
+        //create role 'manager' and add permissions
+        $manager = $auth->createRole('manager');
+        $manager->description = 'Manager';
+        $auth->add($manager);
+        $auth->addChild($manager, $user);
+
         //create role 'admin' and add permissions
         $admin = $auth->createRole('admin');
         $admin->description = 'Administrator';
         $auth->add($admin);
-        $auth->addChild($admin, $user);
+        $auth->addChild($admin, $manager);
         $auth->addChild($admin, $deleteUser);
 
         //create role 'super admin' and add permissions
@@ -162,5 +189,18 @@ class InitController extends Controller
         $auth->addChild($superAdmin, $deleteUser);
 
         $this->stdout("RBAC data initialised.\n", Console::FG_GREEN);
+    }
+
+    public function initCategoryData() {
+        foreach([
+                ['name' => 'Авто', 'slug' => 'auto'],
+                ['name' => 'Музыкальные инструменты', 'slug' => 'music'],
+                ['name' => 'Товары для дома', 'slug' => 'home'],
+            ] as $item) {
+            $cat = new Category();
+            $cat->name = $item['name'];
+            $cat->slug = $item['slug'];
+            $cat->createNode();
+        }
     }
 }

@@ -61,7 +61,7 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-//        $user->generateEmailConfirmToken();
+        $user->generateEmailConfirmToken();
 
         if($user->save()) {
             $this->complited = true;
@@ -69,9 +69,10 @@ class SignupForm extends Model
             $userRole = $auth->getRole('user');
             $auth->assign($userRole, $user->getId());
 
+
             $this->sendEmailConfirmationCode($user);
-            
-            Yii::$app->session->addFlash('reg', 'Вы зарегистрированы, на ваш email отправлено письмо для подтверждения регистрации.');
+
+            Yii::$app->session->addFlash('signup', 'Вы зарегистрированы, на ваш email отправлено письмо для подтверждения регистрации.');
             return $user;
         }
         
@@ -85,11 +86,11 @@ class SignupForm extends Model
     public function sendEmailConfirmationCode($user)
     {
 
-//        Yii::$app->mailer->compose(['html' => '@app/mail/emailConfirm'], ['user' => $user])
-//            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
-//            ->setTo($this->email)
-//            ->setSubject(Yii::t('app','Email confirmation for ') . Yii::$app->name)
-//            ->send();
+        Yii::$app->mailer->compose(['html' => '@app/mail/emailConfirm'], ['user' => $user])
+            ->setFrom(['dublbarter@gmail.com' => 'Dubl'])
+            ->setTo($this->email)
+            ->setSubject(Yii::t('app','Email confirmation for ') . Yii::$app->name)
+            ->send();
 
     }
 

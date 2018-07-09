@@ -6,7 +6,9 @@ $this->title = 'My Yii Application';
 ?>
 <main id="tg-main" class="tg-main tg-haslayout">
     <div class="container">
+
         <p><strong>Зарегистрируйтесь или авторизуйтесь на портале и оставайтесь в курсе новостей Ваших друзей или партнеров, где бы Вы ни находились.</strong></p>
+
         <div class="row">
             <div id="tg-content" class="tg-content">
                 <div class="tg-loginsignup">

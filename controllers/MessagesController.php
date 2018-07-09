@@ -6,11 +6,32 @@ use app\models\Message;
 use Yii;
 use app\models\User;
 use yii\db\Query;
+use yii\filters\AccessControl;
 use yii\helpers\VarDumper;
 use yii\web\Response;
 
 class MessagesController extends FrontController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index','view','ajaxCountNewMessage'],
+                'rules' => [
+                    [
+                        'actions' => ['index','view','ajaxCountNewMessage'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex()
     {

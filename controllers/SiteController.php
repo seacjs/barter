@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\SignupForm;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\VarDumper;
@@ -44,9 +45,9 @@ class SiteController extends FrontController
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
-                    'logout' => ['post'],
+//                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -76,6 +77,7 @@ class SiteController extends FrontController
      */
     public function actionIndex()
     {
+
         $this->layout = 'guest';
         $authFormModel = new LoginForm();
         if ($authFormModel->load(Yii::$app->request->post()) && $authFormModel->login()) {
@@ -85,9 +87,9 @@ class SiteController extends FrontController
         $signUpFormModel = new SignupForm();
         if ($signUpFormModel->load(Yii::$app->request->post())) {
             if ($user = $signUpFormModel->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
+//                if (Yii::$app->getUser()->login($user)) {
+//                    return $this->goHome();
+//                }
             }
         }
 
@@ -226,6 +228,35 @@ class SiteController extends FrontController
 
         return $this->render('resetPassword', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * @param string $token
+     * @return mixed
+     */
+    public function actionConfirmEmail($token)
+    {
+        $user = User::findByEmailConfirmToken($token);
+
+        $message = '';
+
+        if($user != null) {
+            if($user->status == User::STATUS_NEW) {
+                $user->status = User::STATUS_ACTIVE;
+                $message = 'Ваша учетная запись активирована, теперь вы можете войти на сайт.';
+            } elseif($user->status == User::STATUS_ACTIVE) {
+                $message = 'Ваша учетная запись уже активна.';
+            } elseif ($user->status == User::STATUS_BLOCKED) {
+                $message = 'Ваша учетная запись заблокирована. Свяжитесь с администратором.';
+            }
+        } else {
+            $message = 'Неверный токен активации.';
+        }
+
+        return $this->render('confirmEmail', [
+            'model' => $user,
+            'message' => $message
         ]);
     }
 }

@@ -12,6 +12,7 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property string $slug
+ * @property integer $region_id
  *
  * @property Profile[] $profiles
  */
@@ -31,6 +32,7 @@ class City extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['region_id'], 'integer'],
             [['name', 'slug'], 'string'],
         ];
     }
@@ -42,9 +44,19 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Название',
+            'region_id' => 'Регион',
             'slug' => 'Slug',
         ];
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegion()
+    {
+        $this->hasOne(City::class, ['region_id' => 'id']);
     }
 
     /**
@@ -52,6 +64,6 @@ class City extends \yii\db\ActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(Profile::className(), ['city_id' => 'id']);
+        return $this->hasMany(Profile::class, ['city_id' => 'id']);
     }
 }

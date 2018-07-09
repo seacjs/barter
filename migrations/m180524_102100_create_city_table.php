@@ -33,6 +33,10 @@ class m180524_102100_create_city_table extends Migration
             'slug' => $this->string(),
         ]);
 
+        /* todo: foreaign keys */
+//        $this->addForeignKey('fk-city-region_id', '{{%city}}', 'region_id', '{{%region}}', 'id');
+//        $this->addForeignKey('fk-metro-city_id', '{{%metro}}', 'city_id', '{{%city}}', 'id');
+
     }
 
     /**

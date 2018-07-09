@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a4611cda6070bb2a6947f0d76a9139fc",
-    "content-hash": "84716f2d3513bf9b493113ad5c1faec8",
+    "hash": "e1ea02a11f67dc9234a772f948d0429c",
+    "content-hash": "840a257fd41f66f691115a36504810ae",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -28,6 +28,30 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "bower-asset/fancytree",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mar10/fancytree.git",
+                "reference": "92b531889c64291f4de7eed4636ef747d324f458"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mar10/fancytree/zipball/92b531889c64291f4de7eed4636ef747d324f458",
+                "reference": "92b531889c64291f4de7eed4636ef747d324f458",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7",
+                "bower-asset/jquery-ui": ">=1.8.6"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ],
+            "time": "2018-06-30 15:56:56"
         },
         {
             "name": "bower-asset/inputmask",
@@ -71,11 +95,33 @@
             ]
         },
         {
+            "name": "bower-asset/jquery-ui",
+            "version": "1.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jqueryui.git",
+                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/44ecf3794cc56b65954cc19737234a3119d036cc",
+                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "bower-asset/punycode",
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bestiejs/punycode.js.git",
+                "url": "git@github.com:bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
@@ -779,6 +825,49 @@
             "time": "2017-01-25 14:44:14"
         },
         {
+            "name": "seacjs/yii2-nested-sets",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/seacjs/yii2-nested-sets.git",
+                "reference": "2bb2f1534d6132d94c810c55ec516c5a2e0c22d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/seacjs/yii2-nested-sets/zipball/2bb2f1534d6132d94c810c55ec516c5a2e0c22d0",
+                "reference": "2bb2f1534d6132d94c810c55ec516c5a2e0c22d0",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/fancytree": ">=2.12",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-jui": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "seacjs\\nestedsets\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Sholeninov Evgeny",
+                    "email": "sea-cjs@yandex.ru"
+                }
+            ],
+            "description": "Nested set extension for Yii2 Framework",
+            "keywords": [
+                "extension",
+                "nested sets",
+                "yii2"
+            ],
+            "time": "2018-07-03 08:58:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.9",
             "source": {
@@ -1358,6 +1447,64 @@
                 "yii2"
             ],
             "time": "2018-03-21 16:15:55"
+        },
+        {
+            "name": "yiisoft/yii2-jui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-jui.git",
+                "reference": "5ff9bb81d739b69e6a9a52b4f61ac398e17b6227"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/5ff9bb81d739b69e6a9a52b4f61ac398e17b6227",
+                "reference": "5ff9bb81d739b69e6a9a52b4f61ac398e17b6227",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery-ui": "~1.12.1",
+                "yiisoft/yii2": "~2.0.4"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\jui\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kochetov",
+                    "email": "creocoder@gmail.com"
+                },
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com"
+                },
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
+                },
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru"
+                }
+            ],
+            "description": "The Jquery UI extension for the Yii framework",
+            "keywords": [
+                "jQuery UI",
+                "yii2"
+            ],
+            "time": "2018-05-04 06:55:51"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -3169,16 +3316,16 @@
         },
         {
             "name": "sebastian/object-reflector",
-            "version": "1.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/object-reflector.git",
-                "reference": "773f97c67f28de00d397be301821b06708fca0be"
+                "reference": "7707193304715e3caddf28fc73c02c12ed6f350c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/773f97c67f28de00d397be301821b06708fca0be",
-                "reference": "773f97c67f28de00d397be301821b06708fca0be",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/7707193304715e3caddf28fc73c02c12ed6f350c",
+                "reference": "7707193304715e3caddf28fc73c02c12ed6f350c",
                 "shasum": ""
             },
             "require": {
@@ -3210,7 +3357,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2017-03-29 09:07:27"
+            "time": "2018-05-15 05:50:44"
         },
         {
             "name": "sebastian/recursion-context",
@@ -4044,8 +4191,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "seacjs/yii2-nested-sets": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
