@@ -32,6 +32,8 @@ AppAsset::register($this);
 
     <?=$this->render('header')?>
 
+    <?=\app\widgets\AdminPanel::widget();?>
+
     <div class="content">
 
         <?= \app\widgets\ProfileColumn::widget() ?>
