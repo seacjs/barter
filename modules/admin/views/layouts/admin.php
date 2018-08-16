@@ -56,12 +56,12 @@ AdminAsset::register($this);
             ['label' => 'пользователи', 'url' => ['/admin/user']],
             ['label' => 'категории', 'items' => [
                 ['label' => 'категории товаров', 'url' => ['/admin/category-goods']],
-                ['label' => 'категории услуг', 'url' => ['/admin/category-service']],
+//                ['label' => 'категории услуг', 'url' => ['/admin/category-service']],
             ]],
-            ['label' => 'объявления', 'items' => [
-                ['label' => 'объявления товаров', 'url' => ['/admin/product-goods']],
-                ['label' => 'объявления услуг', 'url' => ['/admin/product-service']],
-            ]],
+//            ['label' => 'объявления', 'items' => [
+//                ['label' => 'объявления товаров', 'url' => ['/admin/product-goods']],
+//                ['label' => 'объявления услуг', 'url' => ['/admin/product-service']],
+//            ]],
 
             ['label' => 'новости', 'url' => ['/admin/news']],
 
