@@ -2,17 +2,19 @@
 
 namespace app\controllers;
 
+use app\models\OptionValueGoods;
+use app\models\ProductGoods;
 use app\models\Profile;
 use Yii;
-use app\models\Product;
 use app\models\ProductSearch;
 use app\controllers\FrontController;
+use yii\base\DynamicModel;
 use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProductController implements the CRUD actions for Product model.
+ * ProductController implements the CRUD actions for ProductGoods model.
  */
 class ProductController extends FrontController
 {
@@ -23,9 +25,9 @@ class ProductController extends FrontController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -40,7 +42,7 @@ class ProductController extends FrontController
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $products = Product::find()->where(['status' => Product::STATUS_ACTIVE])->all();
+        $products = ProductGoods::find()->where(['status' => ProductGoods::STATUS_ACTIVE])->all();
 
         return $this->render('index', [
             'products' => $products,
@@ -55,11 +57,10 @@ class ProductController extends FrontController
      */
     public function actionModerate()
     {
-
-        $products = Product::find()->where([
-            'status' => Product::STATUS_NEW
+        $products = ProductGoods::find()->where([
+            'status' => ProductGoods::STATUS_NEW
         ])->orWhere([
-            'status' => Product::STATUS_UPDATED
+            'status' => ProductGoods::STATUS_UPDATED
         ])->all();
 
         return $this->render('index', [
@@ -101,15 +102,17 @@ class ProductController extends FrontController
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new ProductGoods();
+        $post = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->status = Product::STATUS_NEW;
+        if ($model->load($post) && $model->validate()) {
+
+            $model->status = ProductGoods::STATUS_NEW;
             $model->user_id = Yii::$app->user->id;
             $model->save();
 
-//            return $this->redirect(['view', 'id' => $model->id]);
-            return $this->redirect(['/profile/products']);
+            return $this->redirect(['update', 'id' => $model->id]);
+//            return $this->redirect(['/profile/products']);
         }
 
         return $this->render('create', [
@@ -126,14 +129,25 @@ class ProductController extends FrontController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model = $this->findModel($id);
+        $post = Yii::$app->request->post();
+
+        $optionModel = $model->optionModel;
+
+//        $dump = OptionValueGoods::find()->where([
+//            'product_id' => $id,
+//        ])->all();
+//        VarDumper::dump($optionModel->load($post),10,1);die;
+
+        if ($model->load($post) && (!isset($post['DynamicModel']) || $model->optionModel->load($post)) && $model->save() && $model->saveOptions()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
+
             return $this->redirect(['/profile/products']);
         }
 
         return $this->render('update', [
+            'optionModel' => $optionModel,
             'model' => $model,
         ]);
     }
@@ -149,7 +163,7 @@ class ProductController extends FrontController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
@@ -161,7 +175,7 @@ class ProductController extends FrontController
      */
     protected function findModel($id)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        if (($model = ProductGoods::findOne($id)) !== null) {
             return $model;
         }
 

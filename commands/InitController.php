@@ -8,6 +8,8 @@
 namespace app\commands;
 
 use app\models\Category;
+use app\models\CategoryGoods;
+use app\models\CategoryService;
 use app\models\City;
 use app\models\Region;
 use app\models\User;
@@ -197,7 +199,18 @@ class InitController extends Controller
                 ['name' => 'Музыкальные инструменты', 'slug' => 'music'],
                 ['name' => 'Товары для дома', 'slug' => 'home'],
             ] as $item) {
-            $cat = new Category();
+            $cat = new CategoryGoods();
+            $cat->name = $item['name'];
+            $cat->slug = $item['slug'];
+            $cat->createNode();
+        }
+
+        foreach([
+                    ['name' => 'Уборка помещений', 'slug' => 'clean'],
+                    ['name' => 'Разработка сайтов', 'slug' => 'web-dev'],
+                    ['name' => 'Массаж', 'slug' => 'massage'],
+                ] as $item) {
+            $cat = new CategoryService();
             $cat->name = $item['name'];
             $cat->slug = $item['slug'];
             $cat->createNode();

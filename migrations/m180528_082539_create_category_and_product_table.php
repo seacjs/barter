@@ -16,7 +16,7 @@ class m180528_082539_create_category_and_product_table extends Migration
         /**
          * CATEGORY
          */
-        $this->createTable('{{%category}}', [
+        $this->createTable('{{%category_goods}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
             'slug' => $this->string(),
@@ -37,29 +37,26 @@ class m180528_082539_create_category_and_product_table extends Migration
         /**
          * option names
          */
-        $this->createTable('{{%option_bool}}', [
+        $this->createTable('{{%option_g}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
             'category_id' => $this->integer(),
+            'type' => $this->smallInteger()
         ]);
-        $this->createTable('{{%option_string}}', [
+        $this->addForeignKey('fk-option_g_bool-category_id','{{%option_g}}','category_id','{{%category_goods}}','id');
+
+        $this->createTable('{{%option_variant_g}}', [
             'id' => $this->primaryKey(),
+            'option_id' => $this->integer(),
             'name' => $this->string(),
-            'category_id' => $this->integer(),
+            'value' => $this->string(),
         ]);
-        $this->createTable('{{%option_integer}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string(),
-            'category_id' => $this->integer(),
-        ]);
-        $this->addForeignKey('fk-option_bool-category_id','{{%option_bool}}','category_id','{{%category}}','id');
-        $this->addForeignKey('fk-option_string-category_id','{{%option_string}}','category_id','{{%category}}','id');
-        $this->addForeignKey('fk-option_integer-category_id','{{%option_integer}}','category_id','{{%category}}','id');
+        $this->addForeignKey('fk-option_variant_g-option_id','{{%option_variant_g}}','option_id','{{%option_g}}','id');
 
         /**
          * PRODUCT
          */
-        $this->createTable('{{%product}}', [
+        $this->createTable('{{%product_goods}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
             'slug' => $this->string(),
@@ -69,32 +66,24 @@ class m180528_082539_create_category_and_product_table extends Migration
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
 
+            'price' => $this->integer(),
             'status' => $this->smallInteger(),
             'category_id' => $this->integer(),
             'user_id' => $this->integer(),
         ]);
 
-        $this->addForeignKey('fk-product-category_id','{{%product}}','category_id','{{%category}}','id');
-        $this->addForeignKey('fk-product-user_id','{{%product}}','user_id','{{%user}}','id');
+        $this->addForeignKey('fk-product_goods-category_id','{{%product_goods}}','category_id','{{%category_goods}}','id');
+        $this->addForeignKey('fk-product_goods-user_id','{{%product_goods}}','user_id','{{%user}}','id');
 
         /**
          * option values
          */
-        $this->createTable('{{%value_bool}}', [
-            'value' => $this->smallInteger(),
+        $this->createTable('{{%option_value_g}}', [
             'product_id' => $this->integer(),
             'option_id' => $this->integer(),
+            'value' => $this->string()
         ]);
-        $this->createTable('{{%value_string}}', [
-            'value' => $this->string(),
-            'product_id' => $this->integer(),
-            'option_id' => $this->integer(),
-        ]);
-        $this->createTable('{{%value_integer}}', [
-            'value' => $this->integer(),
-            'product_id' => $this->integer(),
-            'option_id' => $this->integer(),
-        ]);
+//        $this->addPrimaryKey('pk-option_value_g','option_value_g',['product_id', 'option_id']);
 
     }
 
@@ -103,16 +92,10 @@ class m180528_082539_create_category_and_product_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%value_integer}}');
-        $this->dropTable('{{%value_string}}');
-        $this->dropTable('{{%value_bool}}');
-
-        $this->dropTable('{{%product}}');
-
-        $this->dropTable('{{%option_integer}}');
-        $this->dropTable('{{%option_string}}');
-        $this->dropTable('{{%option_bool}}');
-
-        $this->dropTable('{{%category}}');
+        $this->dropTable('{{%option_value_g}}');
+        $this->dropTable('{{%product_goods}}');
+        $this->dropTable('{{%option_variant_g}}');
+        $this->dropTable('{{%option_g}}');
+        $this->dropTable('{{%category_goods}}');
     }
 }

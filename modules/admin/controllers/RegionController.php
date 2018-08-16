@@ -1,19 +1,19 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
-use Yii;
-use app\models\City;
 use app\models\CitySearch;
-use app\controllers\FrontController;
+use Yii;
+use app\models\Region;
+use app\models\RegionSearch;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CityController implements the CRUD actions for City model.
+ * RegionController implements the CRUD actions for Region model.
  */
-class CityController extends FrontController
+class RegionController extends FrontController
 {
 
     public $layout = 'admin';
@@ -36,7 +36,7 @@ class CityController extends FrontController
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -45,42 +45,46 @@ class CityController extends FrontController
     }
 
     /**
-     * Lists all City models.
+     * Lists all Region models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CitySearch();
+        $searchModel = new RegionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'showRegion' => true,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single City model.
+     * Displays a single Region model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        $searchModel = new CitySearch(['region_id' => $id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('view', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new City model.
+     * Creates a new Region model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new City();
+        $model = new Region();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -92,7 +96,7 @@ class CityController extends FrontController
     }
 
     /**
-     * Updates an existing City model.
+     * Updates an existing Region model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -112,7 +116,7 @@ class CityController extends FrontController
     }
 
     /**
-     * Deletes an existing City model.
+     * Deletes an existing Region model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -126,15 +130,15 @@ class CityController extends FrontController
     }
 
     /**
-     * Finds the City model based on its primary key value.
+     * Finds the Region model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return City the loaded model
+     * @return Region the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = City::findOne($id)) !== null) {
+        if (($model = Region::findOne($id)) !== null) {
             return $model;
         }
 

@@ -92,11 +92,11 @@ use yii\widgets\Pjax;
             'inputOptions' => ['class' => 'cab-main__input']
         ])->checkbox(['label'=>'','class' => 'cab-main__input']) ?>
 
-        <?= $form->field($model, 'show_birthday',[
+        <?= $form->field($model, 'show_address',[
             'inputOptions' => ['class' => 'cab-main__input']
         ])->checkbox(['label'=>'','class' => 'cab-main__input']) ?>
 
-        <?= $form->field($model, 'show_address',[
+        <?= $form->field($model, 'show_birthday',[
             'inputOptions' => ['class' => 'cab-main__input']
         ])->checkbox(['label'=>'','class' => 'cab-main__input']) ?>
 
@@ -104,15 +104,17 @@ use yii\widgets\Pjax;
             'inputOptions' => ['class' => 'cab-main__input']
         ])->checkbox(['label'=>'','class' => 'cab-main__input']) ?>
 
+
         <?= $form->field($model, 'show_skype',[
             'inputOptions' => ['class' => 'cab-main__input']
-        ])->checkbox(['label'=>'','class' => 'cab-main__input']) ?>
+        ])->checkbox(['label'=>'','class' => 'cab-main__input', 'style' => 'margin-top:40px !important;']) ?>
 
         <?= $form->field($model, 'show_email',[
             'inputOptions' => ['class' => 'cab-main__input']
         ])->checkbox(['label'=>'','class' => 'cab-main__input']) ?>
 
     </div>
+
     <?= Html::submitButton('сохранить', ['id' => 'form-send-button','style' => 'display:none;']) ?>
 
 </div>

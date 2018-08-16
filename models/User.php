@@ -16,6 +16,8 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $email_confirm_token
  * @property string $email
+ * @property string $name
+ * @property string $second_name
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -114,7 +116,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -128,6 +130,10 @@ class User extends ActiveRecord implements IdentityInterface
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
+
+            ['name', 'string'],
+            ['second_name', 'string'],
+
 
             ['email', 'trim'],
             ['email', 'required'],

@@ -16,11 +16,17 @@
             <div class="goods__date"><?=date('d.m.Y', $product->created_at)?></div>
             <div class="goods__price">
                 <img src="/images/icons/bal-blue.png" alt="">
-                <span class="goods__number">2680</span>
+                <span class="goods__number"><?=$product->price?></span>
             </div>
         </div>
     </div>
-    <div class="goods__category"><?=$product->category->name?></div>
+    <div class="goods__category">
+        <?php if(isset($product->category)):?>
+            <?=$product->category->name?>
+        <?php else:?>
+            нет категории
+        <?php endif ?>
+    </div>
     <div class="goods__actions">
         <?php if(Yii::$app->user->id == $product->user_id || Yii::$app->user->can('admin')):?>
             <?php if((

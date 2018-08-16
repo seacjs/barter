@@ -25,8 +25,8 @@ class ProfileAsset extends AssetBundle
     public $js = [
         'js/profile.js',
     ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-    ];
+//    public $depends = [
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
+//    ];
 }
