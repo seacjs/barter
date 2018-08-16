@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Product;
+use app\models\ProductGoods;
 use app\models\User;
 use Yii;
 use app\models\Profile;
@@ -93,8 +94,7 @@ class ProfileController extends FrontController
 
     public function actionProducts()
     {
-
-        $products = Product::find()->where([
+        $products = ProductGoods::find()->where([
             'user_id' => Yii::$app->user->id
         ])->all();
 

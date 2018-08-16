@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Product */
+/* @var $model app\models\ProductGoods */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -18,11 +18,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::find()->select(['name','id'])->indexBy('id')->column()) ?>
+    <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'user_id')->hiddenInput([
-        'value' => $model->isNewRecord ? Yii::$app->user->id : $model->user_id
-    ])->label(false)?>
+    <?php if($model->isNewRecord):?>
+
+        <?= $form->field($model, 'category_id')->dropDownList(\app\models\CategoryGoods::find()->select(['name','id'])->indexBy('id')->column()) ?>
+
+        <?= $form->field($model, 'user_id')->hiddenInput([
+            'value' => $model->isNewRecord ? Yii::$app->user->id : $model->user_id
+        ])->label(false)?>
+
+    <?php else: ?>
+
+        <?= $form->field($model, 'category_id', [
+            'options' => ['disabled' => 'disabled']
+        ])->dropDownList(\app\models\CategoryGoods::find()->select(['name','id'])->indexBy('id')->column()) ?>
+
+        <?= $this->render('_optionsForm', [
+            'form' => $form,
+            'model' => $model,
+            'optionModel' => $optionModel
+        ])?>
+
+    <?php endif ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

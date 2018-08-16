@@ -7,7 +7,7 @@
     transition: 0.3s;
 }
 #admin-panel.admin-panel-open {
-    width: 60px;
+    width: 60px !important;
 }
 .admin-panel-inner {
     background-color: #363b4d;

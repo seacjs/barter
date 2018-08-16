@@ -6,10 +6,9 @@
  * Time: 12:56
  */
 
-
 ?>
 
-<div id="admin-panel">
+<div id="admin-panel" class="<?= $isOpen ? 'admin-panel-open' : ''; ?>">
     <div class="admin-panel-inner">
         <div class="admin-panel-toggle"></div>
 

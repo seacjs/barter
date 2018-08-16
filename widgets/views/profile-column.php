@@ -5,7 +5,7 @@ use yii\bootstrap\Html;
 ?>
 
 <div class="profile">
-    <div class="profile__name"><?=$user->username?></div>
+    <div class="profile__name"><?=$user->name?> <?=$user->second_name?></div>
     <div class="profile__image">
         <img src="http://digilib.metrouniv.ac.id/wp-content/uploads/2017/05/avatar.jpg" alt="" class="profile__photo">
         <div class="profile__rating">5</div>
@@ -47,7 +47,7 @@ use yii\bootstrap\Html;
                     <?=$user->profile->skype?>
                     <img src="/images/icons/skype.png" alt=""/>
                 </div>
-                <div class="profile__email">
+                <div class="profile__email">$model
                     <?=$user->email?>
                 </div>
             </div>
@@ -75,7 +75,7 @@ use yii\bootstrap\Html;
                 <a href="/messages" class="profile__link">
                     <span class="lnr lnr-envelope"></span>
                     <span class="profile__link-text">Сообщения</span>
-                    <div class="profile__message-flag"><?php echo $countNewMessages ?></div>
+                    <div class="profile__message-flag" id="count-new-messages"><?php echo $countNewMessages ?></div>
                 </a>
             </div>
 
@@ -86,13 +86,6 @@ use yii\bootstrap\Html;
                 </a>
             </div>
 
-
-        </div>
-
-        <div class="profile__buttons">
-            <div class="profile__infoblock">
-                <?=$this->render('/layouts/_admin-panel',[])?>
-            </div>
         </div>
 
     </div>

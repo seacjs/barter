@@ -12,6 +12,11 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
+    ],
     'components' => [
         'assetManager' => [
 //            'linkAssets' => true,
@@ -71,7 +76,34 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<controller>/<action>/<id>' => '<controller>/<action>',
+
+                '/' => 'site/index',
+                '/admin' => 'admin/default/index',
+
+                /* admin */
+//                [
+//                    'pattern' => '<module>/<controller>/<action>',
+//                    'route' => '<module>/<controller>/<action>',
+//                ],
+                [
+                    'pattern' => '<module>/<controller>/<action>/<id:\d+>',
+                    'route' => '<module>/<controller>/<action>',
+                ],
+
+                /* site */
+                [
+                    'pattern' => '<controller>/<action>/<id:\S+>',
+                    'route' => '<controller>/<action>',
+                ],
+//                [
+//                    'pattern' => '<controller>/<action>',
+//                    'route' => '<controller>/<action>',
+//                    'defaults' => [
+//                        'action' => 'index',
+//                    ],
+//                ],
+
+
             ],
         ],
     ],

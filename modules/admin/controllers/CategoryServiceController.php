@@ -1,19 +1,17 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
+use app\models\CategoryService;
 use Yii;
 use app\models\Category;
-use yii\data\ActiveDataProvider;
-use app\controllers\FrontController;
-use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
-class CategoryController extends FrontController
+class CategoryServiceController extends FrontController
 {
 
     public $layout = 'admin';
@@ -25,7 +23,7 @@ class CategoryController extends FrontController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -41,20 +39,20 @@ class CategoryController extends FrontController
         return [
             'nested-sets-change' => [
                 'class' => \seacjs\nestedsets\components\NestedSetsChangeAction::class,
-                'modelClassName' => Category::class,
+                'modelClassName' => CategoryService::class,
 //                'modelClass' => new Category(),
             ],
             'nested-sets-insert-before' => [
                 'class' => \seacjs\nestedsets\components\NestedSetsInsertBeforeAction::class,
-                'modelClassName' => Category::class,
+                'modelClassName' => CategoryService::class,
             ],
             'nested-sets-insert-after' => [
                 'class' => \seacjs\nestedsets\components\NestedSetsInsertAfterAction::class,
-                'modelClassName' => Category::class,
+                'modelClassName' => CategoryService::class,
             ],
             'nested-sets-insert-over' => [
                 'class' => \seacjs\nestedsets\components\NestedSetsInsertOverAction::class,
-                'modelClassName' => Category::class,
+                'modelClassName' => CategoryService::class,
             ],
         ];
     }
@@ -83,7 +81,7 @@ class CategoryController extends FrontController
 //        VarDumper::dump(Category::find()->select(['left_key','right_key','id','name'])->asArray()->orderBy('id')->all(),10,1);
 //        die;
 
-        $categories = (new Category())->makeTree(Category::find()->orderBy('left_key')->all());
+        $categories = (new CategoryService())->makeTree(CategoryService::find()->orderBy('left_key')->all());
 
         return $this->render('index', [
             'categories' => $categories,
@@ -110,14 +108,14 @@ class CategoryController extends FrontController
      */
     public function actionCreate($id = null)
     {
-        $model = new Category();
+        $model = new CategoryService();
 
         if ($model->load(Yii::$app->request->post())) {
 
             if($id === null) {
                 $model->createNode();
             } else {
-                $parent = Category::findOne(['id' => $id]);
+                $parent = CategoryService::findOne(['id' => $id]);
                 $model->appendToNode($parent);
             }
 
@@ -167,15 +165,15 @@ class CategoryController extends FrontController
     }
 
     /**
-     * Finds the Category model based on its primary key value.
+     * Finds the CategoryService model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Category the loaded model
+     * @return CategoryService the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = CategoryService::findOne($id)) !== null) {
             return $model;
         }
 

@@ -7,7 +7,7 @@ use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Categories';
+$this->title = 'Категории товаров';
 $this->params['breadcrumbs'][] = $this->title;
 
 //\yii\helpers\VarDumper::dump(\app\models\Category::find()->all(),10,1);die;
@@ -18,12 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить категорию товаров', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
     <?php echo \seacjs\nestedsets\widgets\FancytreeWidget::widget([
-        'url' =>'/category/',
+        'url' =>'/admin/category-goods/',
         'options' => [
             'source' => $categories,
             'extensions' => [

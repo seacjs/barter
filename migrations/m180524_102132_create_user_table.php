@@ -21,6 +21,9 @@ class m180524_102132_create_user_table extends Migration
             'email_confirm_token' => $this->string()->unique(),
             'email' => $this->string()->notNull()->unique(),
 
+            'name' => $this->string()->notNull(),
+            'second_name' => $this->string()->notNull(),
+
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
