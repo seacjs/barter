@@ -70,7 +70,6 @@ class Message extends \yii\db\ActiveRecord
 
     public static function send($from, $to, $message) {
 
-
     }
 
     public function setUserFrom($userModel) {

@@ -9,13 +9,18 @@ use yii\base\Widget;
 
 class UserSearchWidget extends Widget
 {
-
     /**
      * {@inheritdoc}
      */
     public function run()
     {
         $model = new UserSearch();
+
+        $post = Yii::$app->request->post();
+
+        if(isset($post['UserSearch'])) {
+            $model->load($post);
+        }
 
         return $this->render('user-search', [
             'model' => $model

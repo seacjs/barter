@@ -19,7 +19,7 @@ use yii\filters\VerbFilter;
 class UserController extends FrontController
 {
 
-    public $layout = 'admin';
+//    public $layout = 'admin';
 
     /**
      * {@inheritdoc}
@@ -59,12 +59,13 @@ class UserController extends FrontController
     public function actionIndex()
     {
 
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $users = \app\models\User::find()
+            ->where([
+                'not in', 'id', Yii::$app->user->id
+            ])->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'users' => $users,
         ]);
     }
 

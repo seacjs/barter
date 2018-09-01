@@ -79,18 +79,6 @@ class ProfileController extends FrontController
         ]);
     }
 
-    public function actionUsers()
-    {
-
-        $users = \app\models\User::find()
-            ->where([
-                'not in', 'id', Yii::$app->user->id
-            ])->all();
-
-        return $this->render('users', [
-            'users' => $users,
-        ]);
-    }
 
     public function actionProducts()
     {

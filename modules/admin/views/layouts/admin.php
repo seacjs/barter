@@ -40,6 +40,8 @@ AdminAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
 
+            ['label' => 'Управление баллами', 'url' => ['/admin/money']],
+
 //            !Yii::$app->user->isGuest && Yii::$app->user->can('superAdmin') ? (
 //            ['label' => 'c.p.', 'items' => [
 //                ['label' => 'users', 'url' => ['/admin/users']],
@@ -64,8 +66,6 @@ AdminAsset::register($this);
 //            ]],
 
             ['label' => 'новости', 'url' => ['/admin/news']],
-
-
 
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]

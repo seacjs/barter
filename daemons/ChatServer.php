@@ -56,7 +56,7 @@ class ChatServer extends WebSocketServer
         $result = ['message' => ''];
         $clientReceiver = $request['to'];
 
-        if (!empty($request['message']) && $message = trim($request['message']) ) {
+        if (!empty($request['message']) && $message = trim($request['message'])) {
 
             $userFrom = User::findByUsername($client->name);
             $userTo = User::findByUsername($clientReceiver);

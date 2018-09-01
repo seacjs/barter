@@ -12,6 +12,7 @@ use app\models\CategoryGoods;
 use app\models\CategoryService;
 use app\models\City;
 use app\models\Region;
+use app\models\SystemMoney;
 use app\models\User;
 use Yii;
 use yii\console\Controller;
@@ -49,10 +50,22 @@ class InitController extends Controller
         $this->initCityData();
         $this->initUsersData();
         $this->initCategoryData();
+        $this->initMoney();
 
         $this->stdout("First data initialised. Done.\n", Console::FG_GREEN);
 
         return ExitCode::OK;
+    }
+
+    /**
+     * Add system money row
+     */
+    public function initMoney()
+    {
+        $systemMoney = new SystemMoney();
+        $systemMoney->value = 0;
+        $systemMoney->total = 0;
+        $systemMoney->save();
     }
 
     /**

@@ -9,9 +9,8 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-
 <?php $form = ActiveForm::begin([
-    'action' => '/profile/users',
+    'action' => '/user',
 ]); ?>
 
     <?= $form->field($model, 'name', [
@@ -20,7 +19,6 @@ use yii\widgets\ActiveForm;
             'style' => 'float: right;'
         ],
         'inputOptions' => [
-            'class' => 'test',
             'template' => '{input}',
             'placeholder' => 'Поиск участника системы',
             'class' => 'search__input'
