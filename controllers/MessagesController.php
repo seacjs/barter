@@ -66,6 +66,7 @@ class MessagesController extends FrontController
             ->all();
 //        VarDumper::dump($users,10,1);die;
 
+
         foreach($users_ids as $key => $user_id) {
 
             $message = (new Query())
@@ -84,6 +85,8 @@ class MessagesController extends FrontController
             $dialogs[] = $message;
 
         }
+
+
 
         return $this->render('index', [
             'user' => Yii::$app->user->identity,

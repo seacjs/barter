@@ -40,6 +40,8 @@ AdminAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
 
+            ['label' => 'Управление баллами', 'url' => ['/admin/money']],
+
 //            !Yii::$app->user->isGuest && Yii::$app->user->can('superAdmin') ? (
 //            ['label' => 'c.p.', 'items' => [
 //                ['label' => 'users', 'url' => ['/admin/users']],
@@ -56,16 +58,14 @@ AdminAsset::register($this);
             ['label' => 'пользователи', 'url' => ['/admin/user']],
             ['label' => 'категории', 'items' => [
                 ['label' => 'категории товаров', 'url' => ['/admin/category-goods']],
-                ['label' => 'категории услуг', 'url' => ['/admin/category-service']],
+//                ['label' => 'категории услуг', 'url' => ['/admin/category-service']],
             ]],
-            ['label' => 'объявления', 'items' => [
-                ['label' => 'объявления товаров', 'url' => ['/admin/product-goods']],
-                ['label' => 'объявления услуг', 'url' => ['/admin/product-service']],
-            ]],
+//            ['label' => 'объявления', 'items' => [
+//                ['label' => 'объявления товаров', 'url' => ['/admin/product-goods']],
+//                ['label' => 'объявления услуг', 'url' => ['/admin/product-service']],
+//            ]],
 
             ['label' => 'новости', 'url' => ['/admin/news']],
-
-
 
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
