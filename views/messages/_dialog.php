@@ -16,15 +16,23 @@ $a = [
 ?>
 
 
-<div style="border: solid 1px #ccc;">
-    <div>
-        <img src="https://www.shareicon.net/data/2016/05/29/772558_user_512x512.png" width="40px" height="40px">
-        <b><?=$dialog['from'] == $user['id'] ? $users[$dialog['to']]['username'] : $users[$dialog['from']]['username'] ?></b>
-        <br>
-        <b>Сообщение: </b><?= $dialog['message'] ?><br>
-        <b><?=$dialog['from'] != $user['id'] ? '' : '(от меня)' ?></b><br>
-        <span>Date: <?=date('Y.m.d', $dialog['created_at'])?></span><br>
-        <b>Status: <?=$dialog['status'] == \app\models\Message::STATUS_NEW ? 'новое' : 'прочитано'?></b><br>
-        <span><a onclick="disableButton = true;console.log(disableButton);" href="/messages/view/<?=$dialog['from'] == $user['id'] ? $dialog['to'] : $dialog['from']?>">Перейти к диалогу</a></span>
+
+<a class="messages__block" href="/messages/view/<?=$dialog['from'] == $user['id'] ? $dialog['to'] : $dialog['from']?>">
+    <div class="messages__photo"><img src="images/people5.png" alt=""></div>
+    <div class="messages__info">
+        <div class="messages__name"><?=$dialog['from'] == $user['id'] ? $users[$dialog['to']]['username'] : $users[$dialog['from']]['username'] ?></div>
+        <div class="messages__text"><?= $dialog['message'] ?></div>
     </div>
-</div>
+    <div class="messages__answer">
+        <?php if($dialog['from'] != $user['id']): ?>
+            <div class="messages__my-photo"><img src="images/people.png" alt=""></div>
+        <?php else:?>
+            <?php if($dialog['status'] == \app\models\Message::STATUS_NEW):?>
+                <!-- todo: count new messages -->
+                <div class="messages__kolvo">new</div>
+            <?php endif?>
+        <?php endif?>
+        <div class="messages__date"><?=date('Y.m.d', $dialog['created_at'])?></div>
+    </div>
+</a>
+

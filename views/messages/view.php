@@ -20,35 +20,34 @@
 
 ?>
 
-<div class="dialog-wrap" style="height: 600px;">
 
-    <div>
-        Переписка с пользователем: <?= $user->username ?>
-        <hr>
+<div class="chat">
+    <div class="chat__search search">
+        <form action="">
+            <input type="text" value="Поиск участника системы" class="search__input">
+            <button class="search__go"><i class="fa fa-search"></i></button>
+        </form>
     </div>
+    <div class="chat_message-list" id="chat">
 
-    <input type="hidden" id="user_from" value="<?=\Yii::$app->user->identity->username?>">
-    <input type="hidden" id="user_to" value="<?=$user->username?>">
+        <?php foreach($messages as $message): ?>
 
-    <div class="dialog-messages">
-        <div class="" id="chat">
+            <?= $this->render('/messages/_message', [
+                'model' => $message,
+                'me' => $message->from === Yii::$app->user->id
+            ]);?>
 
-            <?php foreach($messages as $message): ?>
+        <?php endforeach ?>
 
-                <?= $this->render('/messages/_message', [
-                    'model' => $message,
-                    'me' => $message->from === Yii::$app->user->id
-                ]);?>
+    </div>
+    <div class="message-editor">
+        <input type="hidden" id="user_from" value="<?=\Yii::$app->user->identity->username?>">
+        <input type="hidden" id="user_to" value="<?=$user->username?>">
 
-            <?php endforeach ?>
-
-        </div>
+        <textarea name="" id="message" cols="30" rows="5"></textarea>
+        <!-- todo: reomve display:none and js handler on button onEnter-->
+        <button style="display:none">send</button>
     </div>
 </div>
-<div class="dialog-form">
 
-<!--        <textarea id="message" rows="1"></textarea>-->
-        <input id="message" type="text" style="width: 100%;">
-<!--        <button id="btnSend">Send</button>-->
-<!--        <div id="response" style="color:#D00"></div>-->
-</div>
+<?= \app\widgets\NotificationColumn::widget() ?>
