@@ -80,30 +80,31 @@ $config = [
                 '/' => 'site/index',
                 '/admin' => 'admin/default/index',
 
-                /* site */
-                [
-                    'pattern' => '<controller>/<action>/<id:\S+>',
-                    'route' => '<controller>/<action>',
-                ],
 
                 /* admin */
-//                [
-//                    'pattern' => '<module>/<controller>/<action>',
-//                    'route' => '<module>/<controller>/<action>',
-//                ],
+                [
+                    'pattern' => '<module>/<controller>/<action>',
+                    'route' => '<module>/<controller>/<action>',
+                ],
                 [
                     'pattern' => '<module>/<controller>/<action>/<id:\d+>',
                     'route' => '<module>/<controller>/<action>',
                 ],
 
 
-//                [
-//                    'pattern' => '<controller>/<action>',
-//                    'route' => '<controller>/<action>',
-//                    'defaults' => [
-//                        'action' => 'index',
-//                    ],
-//                ],
+
+                /* site */
+                [
+                    'pattern' => '<controller>/<action>/<id:\S+>',
+                    'route' => '<controller>/<action>',
+                ],
+                [
+                    'pattern' => '<controller>/<action>',
+                    'route' => '<controller>/<action>',
+                    'defaults' => [
+                        'action' => 'index',
+                    ],
+                ],
 
 
             ],

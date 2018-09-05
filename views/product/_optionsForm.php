@@ -48,7 +48,14 @@
 
     <?php if($option->type === $option::TYPE_STRING): ?>
 
-        <?php echo  $form->field($optionModel, 'option'.$option->id.'')->textInput(['label' => $option->name])?>
+
+        <?= $form->field($optionModel, 'option'.$option->id.'')->textInput([
+            'maxlength' => true,
+            'class' => 'add-goods__input',
+            'placeholder' => $option->name
+        ])->label(false) ?>
+
+<!--        --><?php //echo  $form->field($optionModel, 'option'.$option->id.'')->textInput(['label' => $option->name])?>
 
     <?php endif ?>
 
