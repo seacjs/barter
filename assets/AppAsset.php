@@ -24,6 +24,9 @@ class AppAsset extends AssetBundle
         'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
         'https://cdn.linearicons.com/free/1.0.0/icon-font.min.css',
         'https://fonts.googleapis.com/css?family=Quicksand:500',
+
+        'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
+
         'css/fonts.css',
         'css/app.css',
     ];

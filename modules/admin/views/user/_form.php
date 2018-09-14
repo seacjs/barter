@@ -18,9 +18,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'second_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->dropDownList($model::getStatusesArray(),[
+    <?= $form->field($model, 'status')->dropDownList($model::getStatusesArray(), [
         'value' => $model->isNewRecord ? $model::STATUS_NEW : $model->status
     ]) ?>
+
+    <?php if(Yii::$app->user->can('superAdmin')):?>
+        <?= $form->field($model, 'role')->dropDownList($model::getChildRolesArray()) ?>
+    <?php else:?>
+        <?= $form->field($model, 'role')->hiddenInput([
+            'value' => Yii::$app->authManager->getRole('user')->name
+        ])->label(false) ?>
+    <?php endif?>
 
     <?php if($model->isNewRecord):?>
         <?= $form->field($model, 'email') ?>

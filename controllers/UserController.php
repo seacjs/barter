@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\MoneyTransaction;
 use app\models\test\Test;
 use Yii;
 use app\models\User;
@@ -66,6 +67,38 @@ class UserController extends FrontController
 
         return $this->render('index', [
             'users' => $users,
+        ]);
+    }
+
+    public function actionTransaction($id)
+    {
+        $post = Yii::$app->request->post();
+
+        $user = User::find()->where(['id' => $id])->one();
+        $me =  Yii::$app->user->identity;
+
+        $moneyTransaction = new MoneyTransaction();
+
+        if($moneyTransaction->load($post)) {
+
+            if($me->money >= $moneyTransaction->value) {
+                $me->money = $me->money - $moneyTransaction->value;
+                $user->money = $user->money + $moneyTransaction->value;
+                $moneyTransaction->from_id = $me->id;
+                $moneyTransaction->to_id = $id;
+                $moneyTransaction->operation = $moneyTransaction::OPERATION_TRANSACTION;
+                $moneyTransaction->save();
+                $me->save();
+                $user->save();
+            } else {
+                $moneyTransaction->addError('value','Недостаточно баллов');
+            }
+
+        }
+
+        return $this->render('transaction', [
+            'moneyTransaction' => $moneyTransaction,
+            'user' => $user
         ]);
     }
 

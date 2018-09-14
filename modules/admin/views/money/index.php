@@ -80,14 +80,48 @@ use \yii\bootstrap\Html;
 
         </table>
 
-        <div>
-            Показаны последние 10 операций. <a href="/admin/money/systemmoneylog">перейти к просмотру всех</a>
-        </div>
+        <!-- todo: сделать страницу со всеми операциями.-->
+<!--        <div>-->
+<!--            Показаны последние 10 операций. <a href="/admin/money/systemmoneylog">перейти к просмотру всех</a>-->
+<!--        </div>-->
 
     </div>
 
 </div>
 
 <hr>
+<h2>Начисления баллов Администратору</h2>
+<div class="row">
+    <div class="col-sm-6">
 
-<h2>Бонусы и начичления</h2>
+        <?php $form = ActiveForm::begin([
+        ])?>
+
+        <?= $form->field($moneyTransaction, 'user_id', [])->dropDownList(
+            \app\models\User::find()
+                ->select(['username'])
+                ->where(['in', 'id', Yii::$app->authManager->getUserIdsByRole('admin')])
+                ->indexBy('id')
+                ->column()
+        ) ?>
+
+        <?= $form->field($moneyTransaction, 'operation', [])->dropDownList([
+            $moneyTransaction::OPERATION_ADD_MONEY_TO_USER => 'Добавить пользователю баллы',
+            $moneyTransaction::OPERATION_REMOVE_MONEY_FROM_USER => 'Изьять баллы у пользователя',
+        ]) ?>
+        <?= $form->field($moneyTransaction, 'value')->input('number',[])?>
+
+        <?= $form->field($moneyTransaction, 'message', [])->textarea()?>
+
+        <?= Html::button('Выполнить операцию', [
+            'class' => 'btn btn-success',
+            'type' => 'submit',
+        ])?>
+
+        <?php ActiveForm::end()?>
+
+    </div>
+</div>
+
+
+<!--<h2>Бонусы и начичления</h2>-->

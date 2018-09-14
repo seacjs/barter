@@ -12,8 +12,6 @@ use yii\widgets\Pjax;
 
 <div class="cab-main">
 
-    <?= \app\widgets\UserSearchWidget::widget()?>
-
     <div class="cab-main__photo-block">
         <div class="cab-main__title">Фото профиля</div>
         <div class="cab-main__content">

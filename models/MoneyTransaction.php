@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "money_transaction".
@@ -18,6 +19,28 @@ use Yii;
  */
 class MoneyTransaction extends \yii\db\ActiveRecord
 {
+
+    const STATUS_HOLD = 0;
+    const STATUS_SUCCESS = 10;
+
+    /* todo: перенести константы операций в одно место или разделить их по сущностям, лучше конечно по сущностями, но тогад надо поправить moneySystem */
+    const OPERATION_ADD_MONEY_TO_USER = 4;
+    const OPERATION_REMOVE_MONEY_FROM_USER = 5;
+
+    const OPERATION_TRANSACTION = 10;
+
+    public $user_id;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +55,7 @@ class MoneyTransaction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['from_id', 'to_id', 'operation', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['from_id','user_id', 'to_id', 'operation', 'created_at', 'updated_at', 'status', 'value'], 'integer'],
             [['message'], 'string', 'max' => 255],
         ];
     }
@@ -44,8 +67,10 @@ class MoneyTransaction extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'value' => 'Value',
             'from_id' => 'From ID',
             'to_id' => 'To ID',
+            'user_id' => 'User ID',
             'operation' => 'Operation',
             'message' => 'Message',
             'created_at' => 'Created At',

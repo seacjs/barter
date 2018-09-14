@@ -2,8 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\MoneyTransaction;
 use app\models\SystemMoney;
 use app\models\SystemMoneyLog;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\VarDumper;
@@ -57,7 +59,40 @@ class MoneyController extends FrontController
         if($systemMoney->load($post) && $systemMoney->validate()) {
             $systemMoney->applyOperation();
         }
-//        VarDumper::dump($systemMoney,10,1);die;
+
+        $moneyTransaction = new MoneyTransaction();
+
+        if($moneyTransaction->load($post)) {
+
+            $user = User::find()->where(['id' => $moneyTransaction->user_id])->one();
+
+            if($moneyTransaction->operation == $moneyTransaction::OPERATION_ADD_MONEY_TO_USER) {
+                if($systemMoney->value > $moneyTransaction->value) {
+                    $moneyTransaction->to_id = $moneyTransaction->user_id;
+                    $moneyTransaction->from_id = null;
+                    $user->money = $user->money + $moneyTransaction->value;
+                    $systemMoney->value = $systemMoney->value - $moneyTransaction->value;
+                } else {
+                    $moneyTransaction->addError('value','В системе не достаточно баллов. Доступных баллов '. $systemMoney->value);
+                }
+            } else {
+                if($user->money > $moneyTransaction->value) {
+                    $moneyTransaction->to_id = null;
+                    $moneyTransaction->from_id = $moneyTransaction->user_id;
+                    $user->money = $user->money - $moneyTransaction->value;
+                    $systemMoney->value = $systemMoney->value + $moneyTransaction->value;
+                } else {
+                    $moneyTransaction->addError('value','У пользователя всего '. $user->money . ' баллов');
+                }
+            }
+
+            if(!$moneyTransaction->hasErrors()) {
+                $moneyTransaction->save();
+                $user->save();
+                $systemMoney->save();
+            }
+
+        }
 
         $systemMoneyLog = SystemMoneyLog::find()->limit(10)->orderBy(['id' => SORT_DESC])->all();
 
@@ -65,6 +100,7 @@ class MoneyController extends FrontController
             'money' => \app\models\SystemMoney::find()->one(),
             'systemMoney' => $systemMoney,
             'systemMoneyLog' => $systemMoneyLog,
+            'moneyTransaction' => $moneyTransaction,
         ]);
     }
 

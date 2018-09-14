@@ -38,6 +38,8 @@ class m180528_082542_create_money_table extends Migration
             'from_id' => $this->integer(),
             'to_id' => $this->integer(),
 
+            'value' => $this->integer(),
+
             'operation' => $this->smallInteger(),
             'operation_id' => $this->integer(),
 
