@@ -24,6 +24,8 @@ class m180524_102132_create_user_table extends Migration
             'name' => $this->string()->notNull(),
             'second_name' => $this->string()->notNull(),
 
+            'money' => $this->integer()->defaultValue(1000),
+
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),

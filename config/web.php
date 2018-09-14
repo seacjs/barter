@@ -81,6 +81,12 @@ $config = [
                 '/admin' => 'admin/default/index',
 
 
+                '/messages/view/<id>' => 'messages/view',
+
+                '/product/update/<id>' => 'product/update',
+
+                '/user/transaction/<id>' => 'user/transaction',
+
                 /* admin */
                 [
                     'pattern' => '<module>/<controller>/<action>',

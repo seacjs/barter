@@ -22,12 +22,7 @@
 
 
 <div class="chat">
-    <div class="chat__search search">
-        <form action="">
-            <input type="text" value="Поиск участника системы" class="search__input">
-            <button class="search__go"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
+
     <div class="chat_message-list" id="chat">
 
         <?php foreach($messages as $message): ?>
@@ -40,13 +35,14 @@
         <?php endforeach ?>
 
     </div>
+
     <div class="message-editor">
         <input type="hidden" id="user_from" value="<?=\Yii::$app->user->identity->username?>">
         <input type="hidden" id="user_to" value="<?=$user->username?>">
 
         <textarea name="" id="message" cols="30" rows="5"></textarea>
         <!-- todo: reomve display:none and js handler on button onEnter-->
-        <button style="display:none">send</button>
+        <button id="message-send-button"><span class="lnr lnr-location"></span></button>
     </div>
 </div>
 

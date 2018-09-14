@@ -4,6 +4,13 @@ use yii\bootstrap\Html;
 
 ?>
 <div class="cab-sidebar">
+
+    <!-- chat searchbar begin -->
+
+    <?= \app\widgets\UserSearchWidget::widget()?>
+
+    <!-- chat searchbar end -->
+
     <div class="cab-sidebar__buttons">
         <div class="cab-sidebar__button">
             <a href="#" class="cab-sidebar__link">

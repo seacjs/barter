@@ -6,12 +6,13 @@ use app\models\User;
 use Yii;
 use yii\base\Widget;
 use app\widgets\assets\ProfileAsset;
+use yii\helpers\VarDumper;
 
 
 class ProfileColumn extends Widget
 {
 
-    public $user;
+    public $user = null;
 
     /**
      * {@inheritdoc}
@@ -26,9 +27,12 @@ class ProfileColumn extends Widget
      */
     public function run()
     {
-        $this->user = User::find()->where([
-            'id' => Yii::$app->user->id
-        ])->with('profile')->one();
+
+        if($this->user == null) {
+            $this->user = User::find()->where([
+                'id' => Yii::$app->user->id
+            ])->with('profile')->one();
+        }
 
         $countNewMessages = Message::find()->where([
             'to' => Yii::$app->user->id

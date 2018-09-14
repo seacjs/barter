@@ -16,8 +16,6 @@ if(($model->status == Message::STATUS_NEW) && (!$me)) {
 
 ?>
 
-
-
 <?php if($me):?>
     <div class="chat_message_wrapper">
         <div class="chat_message_body my-message">

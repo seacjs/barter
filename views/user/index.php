@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="people__rating">5</div>
                     </img>
                     <div class="people__info">
-                        <span class="people__name"><?=$user->username?></span>
+                        <a href="/user/transaction/<?=$user->id?>"><span class="people__name"><?=$user->username?></span></a>
                         <span class="people__city"><?=$user->profile->city->name?></span>
                     </div>
                     <?php if($user->isMe || $user->isOnline): ?>

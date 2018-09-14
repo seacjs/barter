@@ -12,16 +12,10 @@ use yii\bootstrap\Html;
 
 <div class="messages">
 
-    <div class="messages__search search">
-        <form action="">
-            <input type="text" value="Поиск участника системы" class="search__input">
-            <button class="search__go"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
 
     <?php if(empty($dialogs)): ?>
 
-            <div style="padding-top: 100px;">Вы еще ни с кем не переписывались</div>
+            <div style="padding-top: 10px;">Вы еще ни с кем не переписывались</div>
 
     <?php endif ?>
 

@@ -60,6 +60,10 @@ class SystemMoney extends \yii\db\ActiveRecord
     const OPERATION_ADD_PERCENT = 2;
     const OPERATION_REMOVE_PERCENT = 3;
 
+    const OPERATION_ADD_MONEY_TO_USER = 4;
+    const OPERATION_REMOVE_MONEY_FROM_USER = 5;
+
+
     /**
      * Return operation list
      * */
@@ -68,8 +72,8 @@ class SystemMoney extends \yii\db\ActiveRecord
         return [
             self::OPERATION_ADD_MONEY => 'Добавить баллов в систему',
             self::OPERATION_REMOVE_MONEY => 'Убрать баллы из системы',
-            self::OPERATION_ADD_PERCENT => 'Добавить процент баллов в систему',
-            self::OPERATION_REMOVE_PERCENT  => 'Убрать процент баллов из системы',
+            self::OPERATION_ADD_PERCENT => 'Увеличить процент балловой массы',
+            self::OPERATION_REMOVE_PERCENT  => 'Уменьшить процент балловой массы',
         ];
     }
 
@@ -85,8 +89,9 @@ class SystemMoney extends \yii\db\ActiveRecord
      * */
     public function applyOperation()
     {
-
         /* start db-transaction */
+
+        /* todo: add db transaction */
 
         switch ($this->operation) {
             case self::OPERATION_ADD_MONEY:
@@ -94,16 +99,65 @@ class SystemMoney extends \yii\db\ActiveRecord
                 $this->total = $this->total + intval($this->shift);
                 break;
             case self::OPERATION_REMOVE_MONEY:
+                if($this->value > $this->shift) $this->shift = $this->value;
                 $this->value = $this->value - intval($this->shift);
                 $this->total = $this->total - intval($this->shift);
                 break;
             case self::OPERATION_ADD_PERCENT:
-                $this->value = $this->value + intval($this->shift);
-                $this->total = $this->total + intval($this->shift);
+                /**
+                 * Add for each user money and then remove sum from total counter
+                 * */
+                $sumShift = 0;
+                /* todo: only with role noAdmin */
+                $users = User::find()->all();
+                foreach($users as $user) {
+                    $userShift = $user->money / 100 * $this->shift;
+                    $intvalUserShift = intval($userShift);
+                    if($intvalUserShift < 0 ) $intvalUserShift = 0;
+                    $sumShift += $intvalUserShift;
+
+                    $user->money = $user->money + $intvalUserShift;
+                    $user->save();
+                    $moneyTransaction = new MoneyTransaction([
+                        'from_id' => $user->id,
+                        'to_id' => null,
+                        'operation' => self::OPERATION_REMOVE_PERCENT,
+                        'message' => $this->message,
+                        'status' => MoneyTransaction::STATUS_SUCCESS,
+                        'value' => $intvalUserShift
+                    ]);
+                    $moneyTransaction->save();
+                }
+
+                $this->total = $this->total + $sumShift;
                 break;
             case self::OPERATION_REMOVE_PERCENT:
-                $this->value = $this->value - intval($this->shift);
-                $this->total = $this->total - intval($this->shift);
+                /**
+                 * Remove for each user money and then remove sum from total counter
+                 * */
+                $sumShift = 0;
+                /* todo: only with role noAdmin */
+                $users = User::find()->all();
+                foreach($users as $user) {
+                    $userShift = $user->money / 100 * $this->shift;
+                    $intvalUserShift = intval($userShift);
+                    if($intvalUserShift < 0 ) $intvalUserShift = 0;
+                    $sumShift += $intvalUserShift;
+
+                    $user->money = $user->money - $intvalUserShift;
+                    $user->save();
+                    $moneyTransaction = new MoneyTransaction([
+                        'from_id' => $user->id,
+                        'to_id' => null,
+                        'operation' => self::OPERATION_REMOVE_PERCENT,
+                        'message' => $this->message,
+                        'status' => MoneyTransaction::STATUS_SUCCESS,
+                        'value' => $intvalUserShift
+                    ]);
+                    $moneyTransaction->save();
+                }
+
+                $this->total = $this->total - $sumShift;
                 break;
         }
 

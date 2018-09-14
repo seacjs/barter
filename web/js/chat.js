@@ -56,29 +56,38 @@
             setTimeout(function(){startSocket(websocketServerLocation)}, 1000);
         };
 
-        $("#message").keydown(function(e) {
-            if(e.keyCode==13) {
-                if ($('#message').val()) {
 
-                    if(!chat || chat.readyState == 3) {
-                        console.log(chat,'reStart socket');
-                        startSocket(websocketServerLocation);
-                    } else {
-                        chat.send(JSON.stringify({
-                            'action': 'message',
-                            'message': $('#message').val(),
-                            'to': $('#user_to').val(),
-                        }));
-                    }
-                    $('#message').val('');
-                    $('#message').focus();
+        function sendMessage() {
+            if ($('#message').val()) {
 
-                    var messagesList = document.getElementById("chat");
-                    messagesList.scrollTop = messagesList.scrollHeight;
+                if(!chat || chat.readyState == 3) {
+                    console.log(chat,'reStart socket');
+                    startSocket(websocketServerLocation);
+                } else {
+                    chat.send(JSON.stringify({
+                        'action': 'message',
+                        'message': $('#message').val(),
+                        'to': $('#user_to').val(),
+                    }));
                 }
+                $('#message').val('');
+                $('#message').focus();
 
+                var messagesList = document.getElementById("chat");
+                messagesList.scrollTop = messagesList.scrollHeight;
+            }
+        }
+
+        $('#message-send-button').on('click', function(){
+            sendMessage();
+        });
+
+        $("#message").keydown(function(e) {
+            if(e.keyCode == 13) {
+                sendMessage();
             }
         });
+
 
 
     }
