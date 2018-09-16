@@ -43,6 +43,8 @@ class CategoryGoods extends \yii\db\ActiveRecord
         ];
     }
 
+
+
     /**
      * {@inheritdoc}
      */

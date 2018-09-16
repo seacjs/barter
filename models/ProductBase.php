@@ -64,6 +64,7 @@ class ProductBase extends \yii\db\ActiveRecord
         return [
             [['content'], 'string'],
             [['category_id','price'], 'integer'],
+            [['category_id'], 'required'],
             [['created_at', 'updated_at','status'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
 //            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['category_id' => 'id']],

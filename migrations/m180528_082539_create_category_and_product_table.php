@@ -70,6 +70,9 @@ class m180528_082539_create_category_and_product_table extends Migration
             'status' => $this->smallInteger(),
             'category_id' => $this->integer(),
             'user_id' => $this->integer(),
+
+            'delivery' => $this->string(),
+            'address' => $this->string(),
         ]);
 
         $this->addForeignKey('fk-product_goods-category_id','{{%product_goods}}','category_id','{{%category_goods}}','id');

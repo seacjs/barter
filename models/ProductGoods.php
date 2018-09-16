@@ -20,6 +20,7 @@ use yii\helpers\VarDumper;
  * @property int $updated_at
  * @property int $status
  * @property int $price
+ * @property string $addressRadioButton
  *
  * @property Product $category
  * @property User $user
@@ -27,6 +28,8 @@ use yii\helpers\VarDumper;
  */
 class ProductGoods extends ProductBase
 {
+
+    public $addressRadioButton = 'my'; // or 'new'
 
     /**
      * {@inheritdoc}

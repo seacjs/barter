@@ -8,7 +8,7 @@
 
 ?>
 
-<div id="admin-panel" class="<?= $isOpen ? 'admin-panel-open' : ''; ?>">
+<div id="admin-panel" class="<?= $isOpen ? 'admin-panel-open' : ''; ?>" style=" display: none !important;">
     <div class="admin-panel-inner">
         <div class="admin-panel-toggle"></div>
 
