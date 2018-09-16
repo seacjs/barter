@@ -33,11 +33,41 @@
                 $product->status === $product::STATUS_NEW ||
                 $product->status === $product::STATUS_UPDATED
             ) && Yii::$app->user->can('admin')):?>
-                <a href="/product/activate/<?=$product->id?>"><button class="goods__button goods__button--activate" title="активировать"><i class="fa fa-eye"></i></button></a>
+<!--                <a href="/product/activate/--><?php //echo $product->id?><!--"><button class="goods__button goods__button--activate" title="активировать"><i class="fa fa-eye"></i></button></a>-->
             <?php endif ?>
-
             <a href="/product/update/<?=$product->id?>"><button class="goods__button goods__button--change" title="редактировать"><i class="fa fa-pencil"></i></button></a>
             <a href="/product/delete/<?=$product->id?>"><button class="goods__button goods__button--delete" title="удалить"><i class="fa fa-trash"></i></button></a>
         <?php endif ?>
     </div>
 </div>
+
+
+<!------------------------------------------------------->
+<!---->
+<!--ПАНЕЛЬ УПРАВЛЕНИЯ:-->
+<!--    - Страница: управления баллами пользователя-->
+<!--        (добавление удаление баллов в систему)-->
+<!--        (последние операции по движеню баллов в системе.)-->
+<!--        (перечисление баллов администраторам)-->
+<!--    РЕГИОНЫ:-->
+<!--    - Страница: регионы-->
+<!--        (список регионов)-->
+<!--        (добавление регионов)-->
+<!--    - Cтраница: добавления региона-->
+<!--    - Cтраница: просмотра региона-->
+<!--        (инфорамаци о регионе)-->
+<!--        (список городов в регионе)-->
+<!--    - Cтраница: редактирование региона-->
+<!--    ...-->
+<!---->
+<!--    Пример:-->
+<!--    ...-->
+<!--    РАЗДЕЛ-->
+<!--    - Страница: какая то страница-->
+<!--        (коротко о фунционале 1)-->
+<!--        (коротко о фунционале 2)-->
+<!--    ...-->
+<!---->
+<!---->
+
+

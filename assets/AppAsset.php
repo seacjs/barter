@@ -29,6 +29,8 @@ class AppAsset extends AssetBundle
 
         'css/fonts.css',
         'css/app.css',
+        'css/custom-checkbox.css',
+        'css/adaptive.css'
     ];
     public $js = [
 //        'https://cdn.jsdelivr.net/npm/vue/dist/vue.js', // vue.js

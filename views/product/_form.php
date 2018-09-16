@@ -6,6 +6,36 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\ProductGoods */
 /* @var $form yii\widgets\ActiveForm */
+
+$script = <<< JS
+$('input[type="radio"]').on('change', function(e) {
+    var categoryId = $(this).val();
+    var categoryBlock = $(this).parent('.container').parent('.add-goods__category__selector-frame').parent('.add-goods__category');
+    var categoryTitle = $(this).parent('.container').parent('.add-goods__category__selector-frame').parent('.add-goods__category').children('.add-goods__category-title').children('.add-goods__region-text');;
+    var categoryName = $(this).data('value');
+    var nextCategoryBlocks = $(this).parent('.container').parent('.add-goods__category__selector-frame').parent('.add-goods__category').next(".add-goods__category");
+
+    categoryTitle.html(categoryName);
+    nextCategoryBlocks.remove();
+
+    $.ajax({
+            method: 'post',
+            url: '/product/ajax-get-categories',
+            data: 'id=' + categoryId,
+            success: function(data) {
+        categoryBlock.after(data);
+        console.log('categoryBlock',categoryBlock);
+    }
+        });
+    });
+    $(".fa-angle-down").on("click", function() {
+        $(this).parent().next().toggle(50);
+    });
+JS;
+//маркер конца строки, обязательно сразу, без пробелов и табуляции
+$this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
+
+
 ?>
 
 <div class="add-goods">
@@ -32,32 +62,35 @@ use yii\widgets\ActiveForm;
                 'placeholder' => 'Название'
             ])->label(false) ?>
 
+            <div class="add-goods__discription">
+                <?= $form->field($model, 'delivery')->textarea([
+                    'rows' => 6,
+                    'class' => 'add-goods__discription-text',
+                    'id' => 'delivery',
+                    'placeholder' => 'информация о доставке'
+                ])->label('информация о доставке') ?>
+            </div>
+            <br>
+
 <!--            --><?php //echo  $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
             <?php if($model->isNewRecord):?>
 
-                <div class="add-goods__category">
-                    <div class="add-goods__category-title">
-                        <input type="text" class="add-goods__region-text" placeholder="Выберите категорию">
-                        <i class="fa fa-angle-down" id='button' aria-hidden="true"></i>
-                    </div>
-                    <?= $form->field($model, 'category_id')->dropDownList(\app\models\CategoryGoods::find()->select(['name','id'])->indexBy('id')->column(),[
-                        'class' => 'add-goods__category-list'
-                    ])->label(false) ?>
+                <?php echo $this->render('/product/_select', [
+                        'modelName' => 'ProductGoods',
+                        'model' => $model,
+                        'attributeName' => 'category_id',
+                        'items' => \app\models\CategoryGoods::find()->select(['name','id'])->where(['level' => 0])->indexBy('id')->column(),
+                    ]); ?>
 
-<!--                    <select multiple class="add-goods__category-list">-->
-<!--                        <option value='' class="add-goods__category-item">Мода, личные вещи</option>-->
-<!--                        <option value='' class="add-goods__category-item">Товары для детей</option>-->
-<!--                        <option value='' class="add-goods__category-item">Товары для дома и дачи</option>-->
-<!--                        <option value='' class="add-goods__category-item">Электронная техника</option>-->
-<!--                        <option value='' class="add-goods__category-item">Мобильные устройства</option>-->
-<!--                    </select>-->
-                </div>
+
                 <?= $form->field($model, 'user_id')->hiddenInput([
                     'value' => $model->isNewRecord ? Yii::$app->user->id : $model->user_id
                 ])->label(false)?>
+
             <?php else: ?>
 
+                <!-- CATEGORY BLOCK -->
                 <?= $form->field($model, 'category_id')->textInput([
                     'maxlength' => true,
                     'class' => 'add-goods__name',
@@ -68,64 +101,41 @@ use yii\widgets\ActiveForm;
 
             <?php endif ?>
 
+            <div class="add-goods__category">
+                <div class="add-goods__category-title">
+                    <p class="add-goods__region-text">Адрес выдачи</p>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </div>
+
+                <?php
+                    $modelName = explode('\\', $model::className());
+                    $modelName = $modelName[count($modelName)-1];
+                    $model->addressRadioButton = ($model->addressRadioButton == 'new' && trim($model->address) == '') ? 'my' : 'new';
+                ?>
+                <div class="add-goods__region-list">
+                    <span><label for="delivery-russia">Мой адрес</label>
+                        <div class="label-holder">
+                            <label class="container">
+                                <input type="radio" name='<?=$modelName?>[addressRadioButton]' value="my" <?=$model->addressRadioButton == true ? 'checked="checked"' : ''?>>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </span>
+                    <span><label for="delivery-cities">Новый адрес: </label>
+                        <span>
+                            <?= $form->field($model, 'address')->label(false)?>
+                        </span>
+                        <div class="label-holder">
+                            <label class="container">
+                                <input type="radio" name='<?=$modelName?>[addressRadioButton]' value="new">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </span>
+                </div>
+            </div>
 
 
-<!---->
-<!--            <div class="add-goods__category">-->
-<!--                <div class="add-goods__category-title">-->
-<!--                    <input type="text" class="add-goods__region-text" placeholder="Регион доставки">-->
-<!--                    <i class="fa fa-angle-down" aria-hidden="true"></i>-->
-<!--                </div>-->
-<!--                <div class="add-goods__region-list">-->
-<!--                    <div><label for="delivery-russia">По всей России</label><input type="checkbox" id='region-all-russia' name='delivery-russia'></div>-->
-<!--                    <div><label for="delivery-cities">Города: </label><span><input type="text"><input name='delivery-cities' type="checkbox"></span></div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!---->
-<!--            <div class="add-goods__category">-->
-<!--                <div class="add-goods__category-title">-->
-<!--                    <input type="text" class="add-goods__region-text" placeholder="Адрес выдачи">-->
-<!--                    <i class="fa fa-angle-down" aria-hidden="true"></i>-->
-<!--                </div>-->
-<!--                <div class="add-goods__region-list">-->
-<!--                    <div><label for="delivery-russia">Мой адрес</label><input type="checkbox" id='region-all-russia' name='delivery-russia'></div>-->
-<!--                    <div><label for="delivery-cities">Новый адрес: </label><span><input type="text"><input name='delivery-cities' type="checkbox"></span></div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
-<!--            <div class="add-goods__category">-->
-<!--                <div class="add-goods__category-title">-->
-<!--                    <input type="text" class="add-goods__region-text" placeholder="Выберите категорию">-->
-<!--                    <i class="fa fa-angle-down" id='button' aria-hidden="true"></i>-->
-<!--                </div>-->
-<!--                <select multiple class="add-goods__category-list">-->
-<!--                    <option value='' class="add-goods__category-item">Мода, личные вещи</option>-->
-<!--                    <option value='' class="add-goods__category-item">Товары для детей</option>-->
-<!--                    <option value='' class="add-goods__category-item">Товары для дома и дачи</option>-->
-<!--                    <option value='' class="add-goods__category-item">Электронная техника</option>-->
-<!--                    <option value='' class="add-goods__category-item">Мобильные устройства</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div class="add-goods__category">-->
-<!--                <div class="add-goods__category-title">-->
-<!--                    <input type="text" class="add-goods__region-text" placeholder="Выберите подкатегорию">-->
-<!--                    <i class="fa fa-angle-down" id='button' aria-hidden="true"></i>-->
-<!--                </div>-->
-<!--                <select id='selector' multiple class="add-goods__category-list">-->
-<!--                    <option value='' class="add-goods__category-item">Ремонт и строительство</option>-->
-<!--                    <option value='' class="add-goods__category-item">Мебель и интерьер</option>-->
-<!--                    <option value='' class="add-goods__category-item">Бытовая техника</option>-->
-<!--                    <option value='' class="add-goods__category-item">Продукты питания</option>-->
-<!--                    <option value='' class="add-goods__category-item">Посуда и товары для кухни</option>-->
-<!--                    <option value='' class="add-goods__category-item">Растения</option>-->
-<!--                    <option value='' class="add-goods__category-item">Удобрения</option>-->
-<!--                    <option value='' class="add-goods__category-item">Прочее</option>-->
-<!--                </select>-->
-<!--            </div>-->
 
             <div class="add-goods__discription">
                 <?= $form->field($model, 'content')->textarea([
@@ -206,20 +216,18 @@ use yii\widgets\ActiveForm;
 <!-- todo: create Asset -->
 
 <script src="/js/jquery-3.3.1.min.js"></script>
-<script>
-    let button = document.getElementById('button');
-    let selector = document.getElementById('selector');
-    $(".fa-angle-down").on("click", function() {
-        console.log('click');
-        $(this).parent().next().toggle();
-    });
-</script>
 <link rel="stylesheet" href="/js/sceditor/minified/themes/default.min.css" />
 <script src="/js/sceditor/minified/sceditor.min.js"></script>
 <script src="/js/sceditor/minified/formats/bbcode.min.js"></script>
 <script>
     // Replace the textarea #example with SCEditor
     var textarea = document.getElementById('example');
+    var delivery = document.getElementById('delivery');
+    sceditor.create(delivery, {
+        format: 'bbcode',
+        toolbar: 'bold,italic,underline|source',
+        style: 'minified/themes/content/default.min.css'
+    });
     sceditor.create(textarea, {
         format: 'bbcode',
         toolbar: 'bold,italic,underline|source',

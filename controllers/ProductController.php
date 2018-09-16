@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\OptionValueGoods;
+use app\models\Product;
 use app\models\ProductGoods;
 use app\models\Profile;
 use Yii;
@@ -12,6 +13,7 @@ use yii\base\DynamicModel;
 use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ProductController implements the CRUD actions for ProductGoods model.
@@ -106,7 +108,9 @@ class ProductController extends FrontController
         $post = Yii::$app->request->post();
 
         if ($model->load($post) && $model->validate()) {
-
+            if($model->addressRadioButton == 'my') {
+                $model->address = '';
+            }
             $model->status = ProductGoods::STATUS_NEW;
             $model->user_id = Yii::$app->user->id;
             $model->save();
@@ -142,6 +146,10 @@ class ProductController extends FrontController
 
         if ($model->load($post) && (!isset($post['DynamicModel']) || $model->optionModel->load($post)) && $model->save() && $model->saveOptions()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
+            if($model->addressRadioButton == 'my') {
+                $model->address = '';
+            }
+            $model->save();
 
             return $this->redirect(['/profile/products']);
         }
@@ -180,5 +188,34 @@ class ProductController extends FrontController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAjaxGetCategories() {
+        $id = Yii::$app->request->post('id', null);
+        $modelId = Yii::$app->request->post('modelId', null);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $items = \app\models\CategoryGoods::find()
+            ->select(['name','id'])
+            ->indexBy('id');
+        if($id !== null) {
+            $parentCategory = \app\models\CategoryGoods::find()->where(['id' => $id])->one();
+            $items = $items->where([
+                '>','left_key', $parentCategory->left_key
+            ])->andWhere([
+                '<','right_key', $parentCategory->right_key
+            ])->andWhere([
+                'level' => intval($parentCategory->level) + 1
+            ]);
+            $items = $items->column();
+
+            if(!empty($items)) {
+                return $this->renderAjax('/product/_select', [
+                    'modelName' => 'ProductGoods',
+                    'attributeName' => 'category_id',
+                    'items' => $items,
+                ]);
+            }
+        }
+        return '';
     }
 }

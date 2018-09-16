@@ -92,3 +92,43 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+.add-goods__category__selector-frame {
+    display: none;
+}
+
+.add-goods__category__selector-frame .checkmark {
+    height: 20px;
+    width: 90%;
+    border: none;
+}
+
+.add-goods__category__selector-frame .checkmark,
+.add-goods__category__selector-frame .container,
+.add-goods__category__selector-frame input {
+    position: static;
+}
+
+.add-goods__category__selector-frame .container {
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+
+.add-goods__category__selector-frame .container:hover {
+    background-color: #ccc;
+}
+
+.add-goods__category__selector-frame input:checked~.checkmark:after {
+    display: none;
+}
+
+.add-goods__category__selector-frame .checkmark {
+    background-color: #e6e6e6;
+    text-decoration: underline;
+    font-size: 0.65em;
+}
+
+.add-goods__category__selector-frame input:checked~.checkmark {
+    color: #4a76a8;
+    background-color: #e6e6e6;
+}
