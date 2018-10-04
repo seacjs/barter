@@ -31,7 +31,6 @@ class m140506_102107_create_file_table extends Migration
 
             'size' => $this->integer(),
             'upload_ip' => $this->string(),
-
         ]);
 
     }

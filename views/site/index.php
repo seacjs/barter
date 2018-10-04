@@ -4,6 +4,7 @@
 
 $this->title = 'My Yii Application';
 ?>
+
 <main id="tg-main" class="tg-main tg-haslayout">
     <div class="container">
 

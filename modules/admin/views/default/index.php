@@ -13,26 +13,6 @@
 
 <div>
 
-    <?php
 
-        $query = (new \yii\db\Query())->from('test')->all();
-
-    ?>
-    <table class="table table-hover">
-        <thead>
-            <th>id</th>
-            <th>time</th>
-            <th>message</th>
-        </thead>
-        <tbody>
-            <?php foreach($query as $item):?>
-                <tr>
-                    <td><?=$item['id']?></td>
-                    <td><?=date('Y.m.d H:i:s',$item['created_at'])?></td>
-                    <td><?=$item['message']?></td>
-                </tr>
-            <?php endforeach;?>
-        </tbody>
-    </table>
 
 </div>

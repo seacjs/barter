@@ -12,7 +12,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\assets\DublAsset;
 
-AppAsset::register($this);
+//AppAsset::register($this);
 DublAsset::register($this);
 
 

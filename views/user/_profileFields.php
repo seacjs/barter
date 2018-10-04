@@ -27,13 +27,13 @@ use yii\widgets\Pjax;
 <div class="cab-main__data-block">
     <div class="cab-main__info">
         <div class="cab-main__title">Личные данные</div>
-        <form action="">
+        <div action="">
             <div class="cab-main__field">
                 <?= $form->field($model, 'city_id',[
-                    'template' => '{label}{input}{error}{hint}',
-                    'labelOptions' => ['class' => 'cab-main__field-name'],
-                    'inputOptions' => ['class' => 'cab-main__input cab-main__input--city']
-                ]) ?>
+//                    'template' => '{label}{input}{error}{hint}',
+//                    'labelOptions' => ['class' => 'cab-main__field-name'],
+//                    'inputOptions' => ['class' => 'cab-main__input cab-main__input--city']
+                ])->dropDownList(\app\models\City::find()->select(['name'])->indexBy('id')->column()) ?>
             </div>
             <div class="cab-main__field">
                 <?= $form->field($model, 'address',[
@@ -84,7 +84,12 @@ use yii\widgets\Pjax;
                     'inputOptions' => ['class' => 'cab-main__input cab-main__input--skype']
                 ]) ?>
             </div>
-        </form>
+        </div>
+        <?= Html::submitButton('сохранить', [
+            'id' => 'form-send-button',
+            'class' => 'cab-main__button cab-main__button--password'
+            //        'style' => 'display:none;'
+        ]) ?>
     </div>
     <div class="cab-main__show">
         <span class="cab-main__show-text">Показать всем</span>
@@ -114,8 +119,6 @@ use yii\widgets\Pjax;
         ])->checkbox(['label'=>'','class' => 'cab-main__input']) ?>
 
     </div>
-
-    <?= Html::submitButton('сохранить', ['id' => 'form-send-button','style' => 'display:none;']) ?>
 
 </div>
 

@@ -28,6 +28,7 @@ class MoneyTransaction extends \yii\db\ActiveRecord
     const OPERATION_REMOVE_MONEY_FROM_USER = 5;
 
     const OPERATION_TRANSACTION = 10;
+    const OPERATION_DEAL = 11;
 
     public $user_id;
 

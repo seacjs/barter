@@ -22,7 +22,9 @@ class SiteController extends FrontController
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout','index'],
+                'denyCallback' => function($rule, $action) {
+                    return \Yii::$app->response->redirect('/');
+                },
                 'rules' => [
                     [
                         'actions' => ['index'],
