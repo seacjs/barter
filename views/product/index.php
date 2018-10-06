@@ -39,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if(Yii::$app->user->can('admin')):?>
         <?php if(Yii::$app->controller->action->id === 'index'):?>
-            <a href="/product/moderate" class="goods__add">Модерировать</a>
+<!--            <a href="/product/moderate" class="goods__add">Модерировать</a>-->
         <?php else: ?>
-            <a href="/product/index" class="goods__add">вернутся к списку</a>
+<!--            <a href="/product/index" class="goods__add">вернутся к списку</a>-->
         <?php endif ?>
     <?php endif ?>
 
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php foreach($products as $product): ?>
 
-        <?= $this->render('/product/_productItem',['product' => $product]); ?>
+        <?= $this->render('/product/_productItem', ['product' => $product]); ?>
 
     <?php endforeach ?>
 

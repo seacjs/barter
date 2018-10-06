@@ -41,15 +41,15 @@ class ProductController extends FrontController
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        $searchModel = new ProductSearch();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $products = ProductGoods::find()->where(['status' => ProductGoods::STATUS_ACTIVE])->all();
 
         return $this->render('index', [
             'products' => $products,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -108,8 +108,11 @@ class ProductController extends FrontController
         $post = Yii::$app->request->post();
 
         if ($model->load($post) && $model->validate()) {
+
             if($model->addressRadioButton == 'my') {
                 $model->address = '';
+            } else {
+                $model->address = $post['ProductGoods']['address'];
             }
             $model->status = ProductGoods::STATUS_NEW;
             $model->user_id = Yii::$app->user->id;
@@ -146,8 +149,12 @@ class ProductController extends FrontController
 
         if ($model->load($post) && (!isset($post['DynamicModel']) || $model->optionModel->load($post)) && $model->save() && $model->saveOptions()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
+
+
             if($model->addressRadioButton == 'my') {
                 $model->address = '';
+            } else {
+                $model->address = $post['ProductGoods']['address'];
             }
             $model->save();
 
@@ -210,6 +217,7 @@ class ProductController extends FrontController
 
             if(!empty($items)) {
                 return $this->renderAjax('/product/_select', [
+                    'level' => Yii::$app->request->post('level', 1),
                     'modelName' => 'ProductGoods',
                     'attributeName' => 'category_id',
                     'items' => $items,

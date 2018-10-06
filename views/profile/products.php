@@ -8,7 +8,6 @@
 ?>
 <div class="goods">
 
-
     <?= \app\widgets\UserSearchWidget::widget()?>
 
     <a href="/product/create" class="goods__add">+Добавить</a>

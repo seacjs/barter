@@ -29,8 +29,6 @@ use yii\helpers\VarDumper;
 class ProductGoods extends ProductBase
 {
 
-    public $addressRadioButton = 'my'; // or 'new'
-
     /**
      * {@inheritdoc}
      */
