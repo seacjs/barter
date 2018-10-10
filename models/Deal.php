@@ -20,6 +20,16 @@ use yii\behaviors\TimestampBehavior;
  */
 class Deal extends \yii\db\ActiveRecord
 {
+
+    const STATUS_WAITING = 0;
+    const STATUS_CONFLICT = 1;
+    const STATUS_ROLLBACK = 2;
+    const STATUS_SUCCESS = 10;
+
+    const TYPE_PRODUCT = 'product';
+    const TYPE_SERVICE = 'service';
+
+
     /**
      * {@inheritdoc}
      */
@@ -66,16 +76,19 @@ class Deal extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getProducts()
-    {
-
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getTransaction()
     {
         return $this->hasOne(MoneyTransaction::className(), ['id' => 'transaction_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduct()
+    {
+        return $this->hasOne(ProductGoods::className(), ['id' => 'product_id']);
     }
 }

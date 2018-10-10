@@ -29,6 +29,8 @@ class ProductBase extends \yii\db\ActiveRecord
      * todo: Добавить таблицу которая бы сохраняла старые значения, и модератор видел бы что изменилось в случае с STATUS_UPDATED
      * */
 
+    public $addressRadioButton = 'my'; // or 'new'
+
     const STATUS_DRAFT = 0;
     const STATUS_NEW = 1;
     const STATUS_REJECTED= 2;
@@ -62,7 +64,7 @@ class ProductBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content'], 'string'],
+            [['content','addressRadioButton','address','delivery'], 'string'],
             [['category_id','price'], 'integer'],
             [['category_id'], 'required'],
             [['created_at', 'updated_at','status'], 'integer'],
@@ -78,6 +80,9 @@ class ProductBase extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'addressRadioButton' => 'Новый или мой адрес',
+            'address' => 'Адрес',
+            'delivery' => 'Информация о доставке',
             'name' => 'Название',
             'slug' => 'Слаг',
             'content' => 'Контент',

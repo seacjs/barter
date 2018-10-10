@@ -84,8 +84,14 @@ $config = [
                 '/messages/view/<id>' => 'messages/view',
 
                 '/product/update/<id>' => 'product/update',
+                '/product/view/<id>' => 'product/view',
 
                 '/user/transaction/<id>' => 'user/transaction',
+
+                '/market/buy/<id>' => 'market/buy',
+                '/market/import/<id>' => 'market/import',
+                '/market/export/<id>' => 'market/export',
+                '/market/confirm/<id>' => 'market/confirm',
 
                 /* admin */
                 [

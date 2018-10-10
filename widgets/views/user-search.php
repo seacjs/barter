@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sea-c
- * Date: 07.07.2018
- * Time: 15:41
- */
+
 use yii\widgets\ActiveForm;
 
 ?>
@@ -19,7 +14,7 @@ use yii\widgets\ActiveForm;
 <!--</form>-->
 
 <?php $form = ActiveForm::begin([
-    'action' => '/user',
+    'action' => $model->action,
 ]); ?>
 
     <?= $form->field($model, 'name', [

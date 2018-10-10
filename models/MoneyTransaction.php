@@ -79,4 +79,34 @@ class MoneyTransaction extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransaction()
+    {
+        return $this->hasOne(MoneyTransaction::className(), ['id' => 'transaction_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'transaction_id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserTo()
+    {
+        return $this->hasOne(User::className(), ['id' => 'to_id'])->with('profile');
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserFrom()
+    {
+        return $this->hasOne(User::className(), ['id' => 'from_id'])->with('profile');
+    }
 }

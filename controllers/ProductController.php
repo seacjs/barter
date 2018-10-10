@@ -2,14 +2,22 @@
 
 namespace app\controllers;
 
+
+use app\actions\FileDeleteAction;
+use app\actions\FileSortAction;
+use app\actions\FileUploadAction;
+use app\actions\FileUploadCkeAction;
+use app\models\File;
 use app\models\OptionValueGoods;
 use app\models\Product;
 use app\models\ProductGoods;
 use app\models\Profile;
+use app\models\User;
 use Yii;
 use app\models\ProductSearch;
 use app\controllers\FrontController;
 use yii\base\DynamicModel;
+use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,21 +43,49 @@ class ProductController extends FrontController
         ];
     }
 
+    public function actions()
+    {
+        return ArrayHelper::merge(parent::actions(), [
+            'file-upload-cke' => [
+                'class' => FileUploadCkeAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+            'file-upload' => [
+                'class' => FileUploadAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+            'file-delete' => [
+                'class' => FileDeleteAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+            'file-sort' => [
+                'class' => FileSortAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+        ]);
+    }
+
     /**
      * Lists all Product models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        $searchModel = new ProductSearch();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $products = ProductGoods::find()->where(['status' => ProductGoods::STATUS_ACTIVE])->all();
+        $products = ProductGoods::find()
+//            ->where([
+//            'status' => ProductGoods::STATUS_ACTIVE
+//        ])
+            ->andWhere([
+            'like','name',Yii::$app->request->post('name','')
+        ])->all();
 
         return $this->render('index', [
             'products' => $products,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -92,8 +128,13 @@ class ProductController extends FrontController
      */
     public function actionView($id)
     {
+        $this->layout = 'full-width';
+        $model = $this->findModel($id);
+        $user = User::find()->with('profile')->where(['id' => $model->id])->one();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'user' => $user,
+            'profile' => $user->profile
         ]);
     }
 
@@ -108,8 +149,11 @@ class ProductController extends FrontController
         $post = Yii::$app->request->post();
 
         if ($model->load($post) && $model->validate()) {
+
             if($model->addressRadioButton == 'my') {
                 $model->address = '';
+            } else {
+                $model->address = $post['ProductGoods']['address'];
             }
             $model->status = ProductGoods::STATUS_NEW;
             $model->user_id = Yii::$app->user->id;
@@ -139,15 +183,17 @@ class ProductController extends FrontController
 
         $optionModel = $model->optionModel;
 
-//        $dump = OptionValueGoods::find()->where([
-//            'product_id' => $id,
-//        ])->all();
-//        VarDumper::dump($optionModel->load($post),10,1);die;
+        $fileModel = new File();
+        $fileModel->multiple = true;
+        $fileModel->files = $model->files;
 
         if ($model->load($post) && (!isset($post['DynamicModel']) || $model->optionModel->load($post)) && $model->save() && $model->saveOptions()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
+
             if($model->addressRadioButton == 'my') {
                 $model->address = '';
+            } else {
+                $model->address = $post['ProductGoods']['address'];
             }
             $model->save();
 
@@ -157,6 +203,7 @@ class ProductController extends FrontController
         return $this->render('update', [
             'optionModel' => $optionModel,
             'model' => $model,
+            'fileModel' => $fileModel,
         ]);
     }
 
@@ -210,6 +257,7 @@ class ProductController extends FrontController
 
             if(!empty($items)) {
                 return $this->renderAjax('/product/_select', [
+                    'level' => Yii::$app->request->post('level', 1),
                     'modelName' => 'ProductGoods',
                     'attributeName' => 'category_id',
                     'items' => $items,

@@ -2,50 +2,33 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\file\FileInput;
+
+
+use app\assets\DublAsset;
+if(!$model->isNewRecord) {
+    DublAsset::register($this);
+}
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ProductGoods */
 /* @var $form yii\widgets\ActiveForm */
 
 $script = <<< JS
-$('input[type="radio"]').on('change', function(e) {
-    var categoryId = $(this).val();
-    var categoryBlock = $(this).parent('.container').parent('.add-goods__category__selector-frame').parent('.add-goods__category');
-    var categoryTitle = $(this).parent('.container').parent('.add-goods__category__selector-frame').parent('.add-goods__category').children('.add-goods__category-title').children('.add-goods__region-text');;
-    var categoryName = $(this).data('value');
-    var nextCategoryBlocks = $(this).parent('.container').parent('.add-goods__category__selector-frame').parent('.add-goods__category').next(".add-goods__category");
-
-    categoryTitle.html(categoryName);
-    nextCategoryBlocks.remove();
-
-    $.ajax({
-            method: 'post',
-            url: '/product/ajax-get-categories',
-            data: 'id=' + categoryId,
-            success: function(data) {
-        categoryBlock.after(data);
-        console.log('categoryBlock',categoryBlock);
-    }
-        });
-    });
-    $(".fa-angle-down").on("click", function() {
+    $("#my-or-new-address .fa-angle-down").on("click", function() {
         $(this).parent().next().toggle(50);
     });
 JS;
-//маркер конца строки, обязательно сразу, без пробелов и табуляции
 $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
-
 
 ?>
 
 <div class="add-goods">
 
     <div class="search">
-        <form action="">
-            <input type="text" value="Поиск участника системы" class="search__input">
-            <button class="search__go"><i class="fa fa-search"></i></button>
-        </form>
+        <?php echo \app\widgets\UserSearchWidget::widget()?>
     </div>
+
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -54,7 +37,6 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
 
         <!-- LEFT COLUMN -->
         <div class="add-goods__left-part">
-
 
             <?= $form->field($model, 'name')->textInput([
                 'maxlength' => true,
@@ -77,6 +59,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
             <?php if($model->isNewRecord):?>
 
                 <?php echo $this->render('/product/_select', [
+                        'level' => 1,
                         'modelName' => 'ProductGoods',
                         'model' => $model,
                         'attributeName' => 'category_id',
@@ -101,7 +84,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
 
             <?php endif ?>
 
-            <div class="add-goods__category">
+            <div class="add-goods__category" id="my-or-new-address">
                 <div class="add-goods__category-title">
                     <p class="add-goods__region-text">Адрес выдачи</p>
                     <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -116,7 +99,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
                     <span><label for="delivery-russia">Мой адрес</label>
                         <div class="label-holder">
                             <label class="container">
-                                <input type="radio" name='<?=$modelName?>[addressRadioButton]' value="my" <?=$model->addressRadioButton == true ? 'checked="checked"' : ''?>>
+                                <input type="radio" name='<?=$modelName?>[addressRadioButton]' value="my" <?=$model->addressRadioButton == 'my' ? 'checked="checked"' : ''?>>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -127,7 +110,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
                         </span>
                         <div class="label-holder">
                             <label class="container">
-                                <input type="radio" name='<?=$modelName?>[addressRadioButton]' value="new">
+                                <input type="radio" name='<?=$modelName?>[addressRadioButton]' value="new" <?=$model->addressRadioButton == 'new' ? 'checked="checked"' : ''?>>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -150,22 +133,39 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
 
         <!-- RIGHT COLUMN -->
         <div class="add-goods__right-part">
-            <div class="add-goods__photo-block">
+
+            <?php if(!$model->isNewRecord): ?>
+
+            <div>
+
+                <?php if(!$model->isNewRecord): ?>
+                    <?php echo  $form->field($fileModel, 'files[]')->widget(FileInput::class, \app\models\File::initialOptions($fileModel, $model));?>
+                <?php endif ?>
+            </div>
+
+            <div class="add-goods__photo-block " style="display:none;">
+
                 <div class="add-goods__photo-title">Выберете фото товара</div>
+
+
                 <button class="add-goods__photo-button">Загрузить</button>
                 <p class="add-goods__photo-text">Максимальный размер 2Mb</p>
-                <div class="add-goods__photos">
-                    <div class="add-goods__photo">
-                        <i class="fa fa-square-o" aria-hidden="true"></i>
-                    </div>
-                    <div class="add-goods__photo">
-                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                    </div>
-                    <div class="add-goods__photo">
-                        <i class="fa fa-square-o" aria-hidden="true"></i>
-                    </div>
-                </div>
+<!--                <div class="add-goods__photos">-->
+<!--                    <div class="add-goods__photo">-->
+<!--                        <i class="fa fa-square-o" aria-hidden="true"></i>-->
+<!--                    </div>-->
+<!--                    <div class="add-goods__photo">-->
+<!--                        <i class="fa fa-check-square-o" aria-hidden="true"></i>-->
+<!--                    </div>-->
+<!--                    <div class="add-goods__photo">-->
+<!--                        <i class="fa fa-square-o" aria-hidden="true"></i>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
             </div>
+
+            <?php endif ?>
 
 <!--            <div class="add-goods__price">-->
 <!--                <input type="text" class="add-goods__price-text" placeholder="Цена">-->
@@ -208,7 +208,14 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
         </div>
     </div>
 
+
+
+
+
     <?php ActiveForm::end(); ?>
+
+
+
 
 </div>
 

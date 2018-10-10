@@ -8,7 +8,6 @@
 ?>
 <div class="goods">
 
-
     <?= \app\widgets\UserSearchWidget::widget()?>
 
     <a href="/product/create" class="goods__add">+Добавить</a>
@@ -22,7 +21,10 @@
 
     <?php foreach($products as $product): ?>
 
-        <?= $this->render('/product/_productItem',['product' => $product]); ?>
+        <?= $this->render('/product/_productItem',[
+                'product' => $product,
+                'control' => true
+        ]); ?>
 
     <?php endforeach ?>
 

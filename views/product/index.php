@@ -35,25 +35,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= \app\widgets\UserSearchWidget::widget()?>
 
-    <a href="/product/create" class="goods__add">+Добавить</a>
+<!--    TODO: add full search column -->
+<!--    <a href="/product/create" class="goods__add">+Добавить</a>-->
 
     <?php if(Yii::$app->user->can('admin')):?>
         <?php if(Yii::$app->controller->action->id === 'index'):?>
-            <a href="/product/moderate" class="goods__add">Модерировать</a>
+<!--            <a href="/product/moderate" class="goods__add">Модерировать</a>-->
         <?php else: ?>
-            <a href="/product/index" class="goods__add">вернутся к списку</a>
+<!--            <a href="/product/index" class="goods__add">вернутся к списку</a>-->
         <?php endif ?>
     <?php endif ?>
 
     <div class="goods__table-title">
         <div class="goods__table-name">Товары</div>
         <div class="goods__table-category">Категория</div>
-        <div class="goods__table-actions">Действия</div>
+<!--        <div class="goods__table-actions">Действия</div>-->
     </div>
 
     <?php foreach($products as $product): ?>
 
-        <?= $this->render('/product/_productItem',['product' => $product]); ?>
+        <?= $this->render('/product/_productItem', [
+                'product' => $product,
+                'control' => false,
+        ]); ?>
 
     <?php endforeach ?>
 

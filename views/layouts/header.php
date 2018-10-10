@@ -9,10 +9,7 @@
             <li class="nav__item"><a href="#" class="nav__link">Новости проекта</a></li>
         </ul>
         <div class="nav__search">
-            <form action="">
-                <input type="search" value="Поиск" class="search__input">
-                <button class="search__go"><i class="fa fa-search"></i></button>
-            </form>
+            <?php echo \app\widgets\ProductSearchWidget::widget()?>
         </div>
     </div>
 </nav>

@@ -110,12 +110,12 @@ use yii\bootstrap\Html;
                     <span class="profile__link-text">Мои товары</span>
                 </a>
             </div>
-            <div class="profile__button">
-                <a href="/profile/products" class="profile__link">
-                    <span class="lnr lnr-heart"></span>
-                    <span class="profile__link-text">Мои услуги</span>
-                </a>
-            </div>
+<!--            <div class="profile__button">-->
+<!--                <a href="/profile/products" class="profile__link">-->
+<!--                    <span class="lnr lnr-heart"></span>-->
+<!--                    <span class="profile__link-text">Мои услуги</span>-->
+<!--                </a>-->
+<!--            </div>-->
             <div class="profile__button">
                 <a href="/messages" class="profile__link">
                     <span class="lnr lnr-envelope"></span>

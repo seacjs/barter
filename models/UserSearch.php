@@ -12,13 +12,27 @@ use app\models\User;
  */
 class UserSearch extends User
 {
+
     public $name;
+    public $age_min_default = 18;
+    public $age_max_default = 100;
+    public $age_min = 18;
+    public $age_max = 100;
+    public $city_id;
+
+    public $action = '/user';
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
+            ['name', 'string'],
+            ['age_min', 'integer'],
+            ['age_max', 'integer'],
+            ['city_id', 'integer'],
+
             [['id', 'status', 'created_at', 'updated_at', 'online_at'], 'integer'],
             [['name','second_name','username', 'auth_key', 'password_hash', 'password_reset_token', 'email_confirm_token', 'email'], 'safe'],
         ];
@@ -78,6 +92,7 @@ class UserSearch extends User
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'online_at' => $this->online_at,
+            'city_id' => $this->city_id,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])

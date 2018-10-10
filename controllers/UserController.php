@@ -8,6 +8,8 @@ use Yii;
 use app\models\User;
 use app\models\UserSearch;
 use app\controllers\FrontController;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\debug\models\search\Profile;
 use yii\filters\AccessControl;
 use yii\helpers\VarDumper;
@@ -59,14 +61,41 @@ class UserController extends FrontController
      */
     public function actionIndex()
     {
+        $query = User::find()->where([
+            'not in', 'user.id', Yii::$app->user->id
+        ])->joinWith('profile')->orderBy('user.id DESC');
 
-        $users = \app\models\User::find()
-            ->where([
-                'not in', 'id', Yii::$app->user->id
-            ])->all();
+        $request = Yii::$app->request;
+        if($request->isPost) {
+            $post = $request->post('UserSearch');
+
+            if(isset($post['city_id'])) {
+                $query = $query->andWhere([
+                    'profile.city_id' => $post['city_id']
+                ]);
+            }
+
+            if(isset($post['name'])) {
+                $query = $query->andWhere([
+                    'like', 'user.username', $post['name']
+                ]);
+                $query = $query->orWhere([
+                    'like', 'profile.name', $post['name']
+                ]);
+            }
+
+//            todo: ages min and max
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
 
         return $this->render('index', [
-            'users' => $users,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
