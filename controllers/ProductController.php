@@ -6,6 +6,7 @@ use app\models\OptionValueGoods;
 use app\models\Product;
 use app\models\ProductGoods;
 use app\models\Profile;
+use app\models\User;
 use Yii;
 use app\models\ProductSearch;
 use app\controllers\FrontController;
@@ -44,7 +45,13 @@ class ProductController extends FrontController
 //        $searchModel = new ProductSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $products = ProductGoods::find()->where(['status' => ProductGoods::STATUS_ACTIVE])->all();
+        $products = ProductGoods::find()
+//            ->where([
+//            'status' => ProductGoods::STATUS_ACTIVE
+//        ])
+            ->andWhere([
+            'like','name',Yii::$app->request->post('name','')
+        ])->all();
 
         return $this->render('index', [
             'products' => $products,
@@ -92,8 +99,13 @@ class ProductController extends FrontController
      */
     public function actionView($id)
     {
+        $this->layout = 'full-width';
+        $model = $this->findModel($id);
+        $user = User::find()->with('profile')->where(['id' => $model->id])->one();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'user' => $user,
+            'profile' => $user->profile
         ]);
     }
 
@@ -142,14 +154,9 @@ class ProductController extends FrontController
 
         $optionModel = $model->optionModel;
 
-//        $dump = OptionValueGoods::find()->where([
-//            'product_id' => $id,
-//        ])->all();
-//        VarDumper::dump($optionModel->load($post),10,1);die;
 
         if ($model->load($post) && (!isset($post['DynamicModel']) || $model->optionModel->load($post)) && $model->save() && $model->saveOptions()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
-
 
             if($model->addressRadioButton == 'my') {
                 $model->address = '';

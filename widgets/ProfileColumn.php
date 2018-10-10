@@ -25,8 +25,9 @@ class ProfileColumn extends Widget
     /**
      * {@inheritdoc}
      */
-    public function run()
+    public function run($template = 'basic')
     {
+
 
         if($this->user == null) {
             $this->user = User::find()->where([

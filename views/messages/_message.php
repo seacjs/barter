@@ -24,7 +24,7 @@ if(($model->status == Message::STATUS_NEW) && (!$me)) {
             </div>
             <div class="chat_message_body_content">
                 <div class="chat_message_body_content_header">
-                    <p class="chat_message_body_content_status"><span>{messageDate}</span><?=$model->userFrom->username?></p>
+                    <p class="chat_message_body_content_status"><span><?=date('Y.m.d',$model->created_at)?></span><?=$model->userFrom->username?></p>
                 </div>
                 <div class="chat_message_body_content_text">
                     <p><?=$model->message?></p>
@@ -34,7 +34,6 @@ if(($model->status == Message::STATUS_NEW) && (!$me)) {
         <hr>
     </div>
 <?php else:?>
-    <!-- todo: after Vitaliy send me new template -->
     <div class="chat_message_wrapper">
         <div class="chat_message_body">
             <div class="chat_message_body_avatar">
@@ -44,7 +43,7 @@ if(($model->status == Message::STATUS_NEW) && (!$me)) {
                 <p><?=$model->message?></p>
             </div>
             <div class="chat_message_body">
-                <p class="chat_message_body_status"><?=$model->userFrom->username?><span>{messageDate}</span></p>
+                <p class="chat_message_body_status"><?=$model->userFrom->username?><span><?=date('Y.m.d',$model->created_at)?></span></p>
             </div>
         </div>
         <hr>

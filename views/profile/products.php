@@ -21,7 +21,10 @@
 
     <?php foreach($products as $product): ?>
 
-        <?= $this->render('/product/_productItem',['product' => $product]); ?>
+        <?= $this->render('/product/_productItem',[
+                'product' => $product,
+                'control' => true
+        ]); ?>
 
     <?php endforeach ?>
 
