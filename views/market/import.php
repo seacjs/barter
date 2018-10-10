@@ -26,7 +26,7 @@
             <div class="import__block">
                 <div class="import__block-name">
                     <div class="import__good">
-                        <img class="import__image" src="/images/good5.png" alt="">
+                        <img class="import__image" src="<?=$deal->product->file->thumbnail?>" alt="">
                         <div class="import__info">
                             <span class="import__name"><?=$deal->product->name?></span>
                             <span class="import__quantity"></span>
@@ -72,7 +72,7 @@
         <div class="import__block">
             <div class="import__block-name">
                 <div class="import__good">
-                    <img class="import__image" src="/images/good5.png" alt="">
+                    <img class="import__image" src="<?=$deal->product->file->thumbnail?>" alt="">
                     <div class="import__info">
                         <span class="import__name"><?=$deal->product->name?></span>
                         <span class="import__quantity"></span>

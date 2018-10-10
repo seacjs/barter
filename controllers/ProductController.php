@@ -2,6 +2,12 @@
 
 namespace app\controllers;
 
+
+use app\actions\FileDeleteAction;
+use app\actions\FileSortAction;
+use app\actions\FileUploadAction;
+use app\actions\FileUploadCkeAction;
+use app\models\File;
 use app\models\OptionValueGoods;
 use app\models\Product;
 use app\models\ProductGoods;
@@ -11,6 +17,7 @@ use Yii;
 use app\models\ProductSearch;
 use app\controllers\FrontController;
 use yii\base\DynamicModel;
+use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -34,6 +41,28 @@ class ProductController extends FrontController
                 ],
             ],
         ];
+    }
+
+    public function actions()
+    {
+        return ArrayHelper::merge(parent::actions(), [
+            'file-upload-cke' => [
+                'class' => FileUploadCkeAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+            'file-upload' => [
+                'class' => FileUploadAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+            'file-delete' => [
+                'class' => FileDeleteAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+            'file-sort' => [
+                'class' => FileSortAction::class,
+                'modelName' => ProductGoods::class,
+            ],
+        ]);
     }
 
     /**
@@ -154,6 +183,9 @@ class ProductController extends FrontController
 
         $optionModel = $model->optionModel;
 
+        $fileModel = new File();
+        $fileModel->multiple = true;
+        $fileModel->files = $model->files;
 
         if ($model->load($post) && (!isset($post['DynamicModel']) || $model->optionModel->load($post)) && $model->save() && $model->saveOptions()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
@@ -171,6 +203,7 @@ class ProductController extends FrontController
         return $this->render('update', [
             'optionModel' => $optionModel,
             'model' => $model,
+            'fileModel' => $fileModel,
         ]);
     }
 

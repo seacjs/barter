@@ -9,7 +9,7 @@
 ?>
 
 <div class="goods__block">
-    <div class="goods__picture"><img src="/images/good1.png" alt="" class="goods__image"></div>
+    <div class="goods__picture"><img src="<?=$product->file->thumbnail?>" alt="" class="goods__image"></div>
     <div class="goods__info">
         <div class="goods__name">
             <?php if(isset($control) && $control):?>

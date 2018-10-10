@@ -17,15 +17,18 @@ class m140506_102107_create_file_table extends Migration
             'id' => $this->primaryKey(),
 
             'component' => $this->string()->notNull(), // table name
-            'component_id' => $this->integer(),
-            'sort' => $this->integer(),
+            'component_id' => $this->integer(), // table primary key
+            'sort' => $this->integer(), // sort order
 
             'path' => $this->string()->notNull(),
             'base_url' => $this->string(),
             'name' => $this->string()->notNull(),
             'type' => $this->string()->notNull(),
 
-            'title' => $this->string(),
+            'title' => $this->string(), //seo property
+            'alt' => $this->string(), // seo property
+            'image_category' => $this->string(), // image catgory
+
             'extension' => $this->string(),
             'created_at' => $this->integer()->notNull()->defaultValue(time()),
 

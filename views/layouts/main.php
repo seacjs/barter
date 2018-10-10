@@ -5,11 +5,12 @@
 
 use yii\helpers\Html;
 use app\assets\AppAsset;
-use app\assets\DublAsset;
-use app\assets\ChatAsset;
 
-AppAsset::register($this);
+use app\assets\ChatAsset;
+use app\assets\DublAsset;
 //DublAsset::register($this);
+AppAsset::register($this);
+
 //ChatAsset::register($this);
 
 

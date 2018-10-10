@@ -6,6 +6,9 @@ use Yii;
 use yii\base\DynamicModel;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\VarDumper;
+use app\traits\DeleteFilesBeforeDeleteModelTrait;
+use app\traits\GetFilesTrait;
+use app\traits\GetFileTrait;
 
 /**
  * This is the model class for table "product".
@@ -28,6 +31,11 @@ use yii\helpers\VarDumper;
  */
 class ProductGoods extends ProductBase
 {
+
+    /**
+     * Use traits to get methods to work with files
+     * */
+    use GetFileTrait, GetFilesTrait, DeleteFilesBeforeDeleteModelTrait;
 
     /**
      * {@inheritdoc}

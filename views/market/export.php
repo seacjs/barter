@@ -26,7 +26,7 @@
             <div class="export__block">
                 <div class="export__block-name">
                     <div class="export__good">
-                        <img class="export__image" src="/images/good5.png" alt="">
+                        <img class="export__image" src="<?=$deal->product->file->thumbnail?>" alt="">
                         <div class="export__info">
                             <span class="export__name"><?=$deal->product->name?></span>
                             <span class="export__quantity"></span>
@@ -69,7 +69,7 @@
             <div class="export__block">
                 <div class="export__block-name">
                     <div class="export__good">
-                        <img class="export__image" src="/images/good5.png" alt="">
+                        <img class="export__image" src="<?=$deal->product->file->thumbnail?>" alt="">
                         <div class="export__info">
                             <span class="export__name"><?=$deal->product->name?></span>
                             <span class="export__quantity"></span>
