@@ -46,28 +46,22 @@ $this->registerJs($script, $this::POS_READY);
     <!-- chat search-bar end -->
 
 
-    <div class="cab-main__photo-block">
-        <div class="cab-main__title">Фото профиля</div>
-        <div class="cab-main__content">
-            <img src="images/Profile.png" alt="" class="cab-main__profile-photo">
-            <div class="cab-main__text">
-                <div class="cab-main__first-text">Используйте свое фото <br> это повысит лояльность и доверие к вам <br> со стороны других участников системы.</div>
-                <div class="cab-main__second-text">Максимальный размер для загрузки 500Кб</div>
-            </div>
-
+<!--    <div class="cab-main__photo-block">-->
+<!--        <div class="cab-main__title">Фото профиля</div>-->
+<!--        <div class="cab-main__content">-->
+<!--            <img src="images/Profile.png" alt="" class="cab-main__profile-photo">-->
+<!--            <div class="cab-main__text">-->
+<!--                <div class="cab-main__first-text">Используйте свое фото <br> это повысит лояльность и доверие к вам <br> со стороны других участников системы.</div>-->
+<!--                <div class="cab-main__second-text">Максимальный размер для загрузки 500Кб</div>-->
+<!--            </div>-->
 <!--            <input id="sortpicture" type="file" name="File[files][]" />-->
-
-            <button id="avatar-upload" class="cab-main__button cab-main__button--photo">Загрузить/изменить</button>
-
-
-        </div>
-    </div>
-
-
-
+<!--            <button id="avatar-upload" class="cab-main__button cab-main__button--photo">Загрузить/изменить</button>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <?= $this->render('/user/_profileFields', [
-        'model' => $model
+        'model' => $model,
+        'fileModel' => $fileModel
     ]) ?>
 
 <!--    <div class="cab-main__password-block">-->

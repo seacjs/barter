@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\actions\FileDeleteAction;
 use app\actions\FileSortAction;
 use app\actions\FileUploadAction;
+use app\models\File;
 use app\models\MoneyTransaction;
 use app\models\Product;
 use app\models\ProductGoods;
@@ -81,6 +82,7 @@ class ProfileController extends FrontController
 
     public function actionUpdate($id = null)
     {
+
         $post = Yii::$app->request->post();
 
         if($id == null) {
@@ -90,6 +92,11 @@ class ProfileController extends FrontController
         }
 
         $model = $user->profile;
+
+        $fileModel = new File();
+        $fileModel->multiple = false;
+        $fileModel->files = $user->files;
+
         if($model->load($post) && $model->user->load($post) && $model->validate() && $model->user->validate()) {
             $model->save();
             $model->user->save();
@@ -98,6 +105,29 @@ class ProfileController extends FrontController
 
         return $this->render('update', [
             'model' => $model,
+            'fileModel' => $fileModel
+        ]);
+    }
+
+    public function actionAvatar($id = null)
+    {
+
+        if($id == null) {
+            $user = Yii::$app->user->identity;
+        } else {
+            $user = User::findOne($id);
+        }
+        $model = $user->profile;
+
+        $fileModel = new File();
+        $fileModel->multiple = false;
+        $fileModel->files = $user->files;
+
+
+
+        return $this->render('avatar', [
+            'user' => $user,
+            'fileModel' => $fileModel
         ]);
     }
 

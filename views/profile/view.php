@@ -14,4 +14,4 @@
 </h1>
 <?php if(Yii::$app->user->id != $model->user_id):?>
     <a href="/messages/view/<?=$model->user_id?>">написать сообщение</a>
-<?php endif?>
+<?php endif ?>

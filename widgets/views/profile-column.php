@@ -8,7 +8,7 @@ use yii\bootstrap\Html;
 <div class="profile">
     <div class="profile__name"><?=$user->name?> <?=$user->second_name?></div>
     <div class="profile__image">
-        <img src="http://digilib.metrouniv.ac.id/wp-content/uploads/2017/05/avatar.jpg" alt="" class="profile__photo">
+        <img src="<?=$user->avatar?>" alt="" class="profile__photo">
     </div>
     <div class="profile__info">
 

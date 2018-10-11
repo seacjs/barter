@@ -18,6 +18,7 @@ use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\Console;
+use yii\helpers\VarDumper;
 
 /**
  * This command echoes the first argument that you have entered.
