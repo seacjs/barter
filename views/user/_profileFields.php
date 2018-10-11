@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sea-c
- * Date: 27.06.2018
- * Time: 17:29
- * @var $model app\models\Profile
- */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -25,6 +18,27 @@ use yii\widgets\Pjax;
 //        'oninput' => 'setTimeout(function(){$("#form-send-button").click();console.log("setTimeout")}, 3000)'
     ]
 ]); ?>
+
+
+<div class="cab-main__photo-block">
+    <div class="cab-main__title">Фото профиля</div>
+    <div class="cab-main__content">
+        <img src="<?=$model->user->avatar?>" alt="" class="cab-main__profile-photo">
+        <div class="cab-main__text">
+            <div class="cab-main__first-text">Используйте свое фото <br> это повысит лояльность и доверие к вам <br> со стороны других участников системы.</div>
+            <div class="cab-main__second-text">Максимальный размер для загрузки 500Кб</div>
+        </div>
+        <a class="cab-main__button cab-main__button--photo" href="/profile/avatar">Загрузить/изменить</a>
+    </div>
+</div>
+
+<!--<div>-->
+<!--    <div>-->
+<!--        --><?php //if(!$model->isNewRecord): ?>
+<!--            --><?php //echo  $form->field($fileModel, 'files[]')->widget(\kartik\file\FileInput::class, \app\models\File::initialOptions($fileModel, $model->user));?>
+<!--        --><?php //endif ?>
+<!--    </div>-->
+<!--</div>-->
 
 
 <div class="cab-main__data-block">

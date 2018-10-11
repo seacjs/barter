@@ -137,7 +137,6 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
             <?php if(!$model->isNewRecord): ?>
 
             <div>
-
                 <?php if(!$model->isNewRecord): ?>
                     <?php echo  $form->field($fileModel, 'files[]')->widget(FileInput::class, \app\models\File::initialOptions($fileModel, $model));?>
                 <?php endif ?>

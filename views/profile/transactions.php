@@ -19,7 +19,7 @@
             <div class="message__block">
 
                 <div class="message__partner">
-                    <img class="message__partner-image" src="/images/people1.png" alt="">
+                    <img class="message__partner-image" src="<?=$transaction->userTo->avatar?>" alt="">
                     <div class="message__partner-info">
                         <div class="message__partner-name"><?=$transaction->userTo->name?></div>
                         <div class="message__partner-city"><?=$transaction->userTo->profile->city->name?></div>
@@ -63,7 +63,7 @@
                     от администратора системы
                 <?php else: ?>
                     <div class="message__partner">
-                        <img class="message__partner-image" src="/images/people1.png" alt="">
+                        <img class="message__partner-image" src="<?=$transaction->userFrom->avatar?>" alt="">
                         <div class="message__partner-info">
                             <div class="message__partner-name"><?=$transaction->userFrom->name?></div>
                             <div class="message__partner-city"><?=$transaction->userFrom->profile->city->name?></div>

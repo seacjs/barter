@@ -31,8 +31,7 @@ use app\models\City;
 class Profile extends \yii\db\ActiveRecord
 {
 
-    public $avatar;
-    public $imageFile;
+
 
     /**
      * {@inheritdoc}
@@ -48,7 +47,6 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
             [['user_id', 'city_id', 'phone', 'telegram_on', 'viber_on', 'whatsapp_on', 'show_city', 'show_address', 'show_birthday', 'show_phone', 'show_skype', 'show_email'], 'integer'],
             [['name', 'birthday', 'skype'], 'string', 'max' => 255],
             [['address'], 'string', 'max' => 512],
@@ -81,17 +79,6 @@ class Profile extends \yii\db\ActiveRecord
             'show_email' => 'Показывать Email',
         ];
     }
-
-    public function upload()
-    {
-        if ($this->validate()) {
-            $this->imageFile->saveAs('/uploads/avatar/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -38,7 +38,7 @@ use yii\widgets\DetailView;
                 <div class="backside"></div>
             </div>
             <div class="image__gallery">
-                <img src="<?=$model->file->image?>" alt="">
+                <img src="<?=$model->file != null ? $model->file->thumbnail : ''?>" alt="">
             </div>
         </div>
     </div>

@@ -36,6 +36,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_BLOCKED = 2;
     const STATUS_ACTIVE = 10;
 
+
     /**
      * Get user statuses as array
      *
@@ -355,6 +356,37 @@ class User extends ActiveRecord implements IdentityInterface
     public function getIsOnline()
     {
         return ($this->online_at > time() - (60 * 1000));
+    }
+
+    public function getAvatar() {
+
+        $files = $this->files;
+        if(empty($files)) {
+            $url = 'http://digilib.metrouniv.ac.id/wp-content/uploads/2017/05/avatar.jpg';
+        } else {
+            $url = $files[0]->image;
+        }
+        return $url;
+    }
+
+    public function getFiles() {
+        return $this->hasMany(File::class, ['component_id' => 'id'])->andWhere([
+            'component' => 'user',
+        ])->orderBy(['sort' => SORT_ASC]);
+    }
+    public function getMainFiles() {
+        return $this->hasMany(File::class, ['component_id' => 'id'])->andWhere([
+            'component' => 'user',
+        ])->andWhere([
+            'image_category' => File::IMAGE_CATEGORY_MAIN
+        ])->orderBy(['sort' => SORT_ASC]);
+    }
+    public function getContentFiles() {
+        return $this->hasMany(File::class, ['component_id' => 'id'])->andWhere([
+            'component' => 'user',
+        ])->andWhere([
+            'image_category' => File::IMAGE_CATEGORY_CONTENT
+        ])->orderBy(['sort' => SORT_ASC]);
     }
 
 }

@@ -42,7 +42,7 @@
                 </div>
                 <div class="export__block-partner">
                     <span class="export__partner-name"><?=$deal->transaction->userTo->profile->name?></span>
-                    <img class="export__partner-photo" src="http://digilib.metrouniv.ac.id/wp-content/uploads/2017/05/avatar.jpg" alt="">
+                    <img class="export__partner-photo" src="<?=$deal->transaction->userTo->avatar?>" alt="">
                     <span class="export__partner-city"><?=$deal->transaction->userTo->profile->city->name?></span>
                 </div>
                 <div class="export__block-conditions">
@@ -85,7 +85,7 @@
                 </div>
                 <div class="export__block-partner">
                     <span class="export__partner-name"><?=$deal->transaction->userTo->profile->name?></span>
-                    <img class="export__partner-photo" src="http://digilib.metrouniv.ac.id/wp-content/uploads/2017/05/avatar.jpg" alt="">
+                    <img class="export__partner-photo" src="<?=$deal->transaction->userTo->avatar?>" alt="">
                     <span class="export__partner-city"><?=$deal->transaction->userTo->profile->city->name?></span>
                 </div>
                 <div class="export__block-confirm">
