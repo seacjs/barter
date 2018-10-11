@@ -327,6 +327,7 @@ class User extends ActiveRecord implements IdentityInterface
         if($insert) {
             $profile = new Profile();
             $profile->user_id = $this->id;
+            $profile->city_id = City::find()->one()->id;
             $profile->save();
         }
 

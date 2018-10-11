@@ -89,6 +89,7 @@ class SiteController extends FrontController
         $signUpFormModel = new SignupForm();
         if ($signUpFormModel->load(Yii::$app->request->post())) {
             if ($user = $signUpFormModel->signup()) {
+
 //                if (Yii::$app->getUser()->login($user)) {
 //                    return $this->goHome();
 //                }

@@ -69,7 +69,6 @@ class SignupForm extends Model
             $userRole = $auth->getRole('user');
             $auth->assign($userRole, $user->getId());
 
-
             $this->sendEmailConfirmationCode($user);
 
             Yii::$app->session->addFlash('signup', 'Вы зарегистрированы, на ваш email отправлено письмо для подтверждения регистрации.');
