@@ -8,9 +8,43 @@ use yii\widgets\Pjax;
 /* @var $model app\models\Profile */
 /* @var $form ActiveForm */
 
+
+$className = \app\models\Profile::class;
+$script = <<< JS
+$('#avatar-upload').on('click', function() {
+    // var file_data = $('#sortpicture').prop('files')[0];
+    // var form_data = new FormData();
+    //
+    // form_data.append('component_id', 1);
+    // form_data.append('multiple', 1);
+    // form_data.append('files', file_data);
+    // console.log('form_data',form_data);
+    // $.ajax({
+    //     url: '/profile/file-upload',
+    //     dataType: 'text',
+    //     cache: false,
+    //     contentType: false,
+    //     processData: false,
+    //     data: form_data,
+    //     type: 'post',
+    //     success: function(php_script_response){
+    //         console.log('php_script_response',php_script_response);
+    //     }
+    //  });
+});
+JS;
+$this->registerJs($script, $this::POS_READY);
+
 ?>
 
 <div class="cab-main">
+
+    <!-- chat search-bar begin -->
+
+    <?= \app\widgets\UserSearchWidget::widget()?>
+
+    <!-- chat search-bar end -->
+
 
     <div class="cab-main__photo-block">
         <div class="cab-main__title">Фото профиля</div>
@@ -20,9 +54,17 @@ use yii\widgets\Pjax;
                 <div class="cab-main__first-text">Используйте свое фото <br> это повысит лояльность и доверие к вам <br> со стороны других участников системы.</div>
                 <div class="cab-main__second-text">Максимальный размер для загрузки 500Кб</div>
             </div>
-            <button class="cab-main__button cab-main__button--photo">Загрузить/изменить</button>
+
+<!--            <input id="sortpicture" type="file" name="File[files][]" />-->
+
+            <button id="avatar-upload" class="cab-main__button cab-main__button--photo">Загрузить/изменить</button>
+
+
         </div>
     </div>
+
+
+
 
     <?= $this->render('/user/_profileFields', [
         'model' => $model

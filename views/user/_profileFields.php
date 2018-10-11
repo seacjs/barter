@@ -11,18 +11,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
+
 ?>
 
 <?php Pjax::begin(); ?>
 
 <?php $form = ActiveForm::begin([
     'options' => [
-        'data-pjax' => true,
+        ['enctype' => 'multipart/form-data'],
+        'data-pjax' => false,
         'id' => 'user-change-form',
-        'onchange' => '$("#form-send-button").click();',
+//        'onchange' => '$("#form-send-button").click();',
 //        'oninput' => 'setTimeout(function(){$("#form-send-button").click();console.log("setTimeout")}, 3000)'
     ]
 ]); ?>
+
 
 <div class="cab-main__data-block">
     <div class="cab-main__info">

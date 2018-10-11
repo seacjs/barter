@@ -116,9 +116,9 @@ class UserController extends FrontController
                 $moneyTransaction->from_id = $me->id;
                 $moneyTransaction->to_id = $id;
                 $moneyTransaction->operation = $moneyTransaction::OPERATION_TRANSACTION;
-                $moneyTransaction->save();
-                $me->save();
-                $user->save();
+                if($me->save() && $user->save() && $moneyTransaction->save()) {
+                    $this->redirect('/profile/transactions');
+                }
             } else {
                 $moneyTransaction->addError('value','Недостаточно баллов');
             }
@@ -139,8 +139,13 @@ class UserController extends FrontController
      */
     public function actionView($id)
     {
+
+
+        $user = User::find()->where(['id' => $id])->one();
+
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'user' => $user
         ]);
     }
 

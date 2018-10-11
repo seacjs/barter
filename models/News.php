@@ -59,15 +59,15 @@ class News extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Title',
-            'name' => 'Name',
-            'slug' => 'Slug',
+            'name' => 'Название',
+            'slug' => 'Слаг',
             'description' => 'Description',
             'keywords' => 'Keywords',
             'h1' => 'H1',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'content' => 'Content',
-            'active' => 'Active',
+            'content' => 'Контент',
+            'active' => 'Показывать на сайте',
         ];
     }
 
