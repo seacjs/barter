@@ -22,7 +22,9 @@
         "consik/yii2-websocket": "^1.0",
         "seacjs/yii2-nested-sets": "dev-master",
         "kartik-v/yii2-widget-select2": "@dev",
-        "kartik-v/yii2-widget-fileinput": "@dev"
+        "kartik-v/yii2-widget-fileinput": "@dev",
+        "demi/cropper": "~1.0",
+        "dpodium/yii2-widget-upload-crop": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

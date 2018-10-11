@@ -66,7 +66,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content'], 'string'],
+            [['content','video'], 'string'],
             [['category_id'], 'integer'],
             [['created_at', 'updated_at','status'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
@@ -89,6 +89,7 @@ class Product extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
+            'video' => 'Video',
         ];
     }
 

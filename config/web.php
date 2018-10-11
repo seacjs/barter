@@ -87,6 +87,9 @@ $config = [
                 '/product/view/<id>' => 'product/view',
 
                 '/user/transaction/<id>' => 'user/transaction',
+                '/user/view/<id>' => 'user/view',
+
+                '/news/view/<id>' => 'news/view',
 
                 '/market/buy/<id>' => 'market/buy',
                 '/market/import/<id>' => 'market/import',

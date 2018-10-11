@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b86d020635499820339b0f4db70ad70",
+    "content-hash": "dbf7deb951bf52161e1bfc54a6cd519e",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -27,6 +27,23 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "bower-asset/cropper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fengyuanchen/cropper.git",
+                "reference": "67b42b9d3c42d08cd469a97722833bb41caf89e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fengyuanchen/cropper/zipball/67b42b9d3c42d08cd469a97722833bb41caf89e4",
+                "reference": "67b42b9d3c42d08cd469a97722833bb41caf89e4",
+                "shasum": null
+            },
+            "type": "bower-asset",
+            "time": "2018-09-03T12:35:23+00:00"
         },
         {
             "name": "bower-asset/fancytree",
@@ -303,6 +320,98 @@
                 "yii2"
             ],
             "time": "2016-12-07T02:59:48+00:00"
+        },
+        {
+            "name": "demi/cropper",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/demisang/yii2-cropper.git",
+                "reference": "3f6ecbd9e82e3462856971638640c786593d71be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/demisang/yii2-cropper/zipball/3f6ecbd9e82e3462856971638640c786593d71be",
+                "reference": "3f6ecbd9e82e3462856971638640c786593d71be",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/cropper": "*",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "demi\\cropper\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Orlov",
+                    "email": "orlov_mail@mail.ru",
+                    "homepage": "https://orlov.io/",
+                    "role": "Creator"
+                }
+            ],
+            "description": "Yii2 wrapper for Image Cropper javascript library",
+            "homepage": "https://github.com/demisang/yii2-cropper#readme",
+            "keywords": [
+                "crop",
+                "cropper",
+                "image",
+                "widget",
+                "yii2"
+            ],
+            "time": "2017-11-22T23:24:08+00:00"
+        },
+        {
+            "name": "dpodium/yii2-widget-upload-crop",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dpodium/yii2-widget-upload-crop.git",
+                "reference": "89ae3f5e3e520928a508ea0500e6f733b609d36b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dpodium/yii2-widget-upload-crop/zipball/89ae3f5e3e520928a508ea0500e6f733b609d36b",
+                "reference": "89ae3f5e3e520928a508ea0500e6f733b609d36b",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "2.0.*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dpodium\\yii2\\widget\\upload\\crop\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Sionghuat Chng",
+                    "email": "sionghuat.chng@dpodium.com",
+                    "homepage": "http://www.dpodium.com"
+                }
+            ],
+            "description": "Yii2 widget for file upload and allow user to zoom and crop the image",
+            "keywords": [
+                "crop",
+                "fileupload",
+                "widget",
+                "yii2",
+                "zoom"
+            ],
+            "time": "2018-01-04T04:06:18+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -1994,6 +2103,25 @@
             "time": "2017-08-30T11:04:43+00:00"
         },
         {
+            "name": "bower-asset/jcrop",
+            "version": "v0.9.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tapmodo/Jcrop.git",
+                "reference": "d7333e1ca20f847297a3daaa17c10f37c894432f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tapmodo/Jcrop/zipball/d7333e1ca20f847297a3daaa17c10f37c894432f",
+                "reference": "d7333e1ca20f847297a3daaa17c10f37c894432f",
+                "shasum": null
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "bower-asset/typeahead.js",
             "version": "v0.11.1",
             "source": {
@@ -2421,6 +2549,118 @@
                 "url"
             ],
             "time": "2018-07-29T08:09:46+00:00"
+        },
+        {
+            "name": "mackrais/yii2-crop-image-section",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mackrais/yii2-crop-image-section.git",
+                "reference": "3d0fbc3d2038ec3e3a50621a85fdd1e4246f4cf5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mackrais/yii2-crop-image-section/zipball/3d0fbc3d2038ec3e3a50621a85fdd1e4246f4cf5",
+                "reference": "3d0fbc3d2038ec3e3a50621a85fdd1e4246f4cf5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mackrais\\cropimage\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Oleh Boiko",
+                    "email": "mackraiscms@gmail.com",
+                    "homepage": "http://mackrais.com"
+                }
+            ],
+            "description": "Cropping widget yii2 by section. The widget supports transparent background png,gif",
+            "homepage": "https://github.com/mackrais/yii2-crop-image-section",
+            "keywords": [
+                "Context",
+                "click",
+                "crop",
+                "crop and zoom",
+                "cropping",
+                "extension",
+                "menu",
+                "mouse",
+                "widget",
+                "yii2",
+                "zoom"
+            ],
+            "time": "2017-09-16T07:41:36+00:00"
+        },
+        {
+            "name": "maxmirazh33/yii2-uploadable-cropable-image",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maxmirazh33/yii2-uploadable-cropable-image.git",
+                "reference": "81b431a98be2dcbbe29f39fce862b2cf9718ef42"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maxmirazh33/yii2-uploadable-cropable-image/zipball/81b431a98be2dcbbe29f39fce862b2cf9718ef42",
+                "reference": "81b431a98be2dcbbe29f39fce862b2cf9718ef42",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jcrop": "0.9.*",
+                "yiisoft/yii2": "2.0.*",
+                "yiisoft/yii2-bootstrap": "2.*",
+                "yiisoft/yii2-imagine": "2.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "maxmirazh33\\image\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxim Kolokolnikov",
+                    "email": "maxmirazh33@gmail.com",
+                    "homepage": "http://maximkolokolnikov.ru"
+                }
+            ],
+            "description": "Yii2 extension for upload and crop images",
+            "homepage": "https://github.com/maxmirazh33/yii2-uploadable-cropable-image",
+            "keywords": [
+                "Image upload",
+                "extension",
+                "image",
+                "image crop",
+                "jcrop",
+                "yii2"
+            ],
+            "time": "2015-10-20T07:25:47+00:00"
         },
         {
             "name": "myclabs/deep-copy",

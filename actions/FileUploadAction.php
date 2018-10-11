@@ -41,6 +41,7 @@ class FileUploadAction extends Action
         $post = Yii::$app->request->post();
 
         if(Yii::$app->request->isPost) {
+//            $className = \app\models\Profile::class;
             $className = $post['model'];
             $model = $className::findOne($post['component_id']);
 

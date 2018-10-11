@@ -135,7 +135,14 @@ use yii\bootstrap\Html;
             <div class="profile__buttons">
 
                 <div class="profile__button">
-                    <a href="/messages" class="profile__link">
+                    <a href="/messages/view/<?=$user->id?>" class="profile__link">
+                        <span class="lnr lnr-envelope"></span>
+                        <span class="profile__link-text">Написать сообщение</span>
+                    </a>
+                </div>
+
+                <div class="profile__button">
+                    <a href="/user/transaction/<?=$user->id?>" class="profile__link">
                         <span class="lnr lnr-envelope"></span>
                         <span class="profile__link-text">перевод баллов</span>
                     </a>
