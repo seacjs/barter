@@ -1,6 +1,6 @@
 @font-face {
     font-family: MyriadProRegular;
-    src: url('../assets/fonts/Myriad Pro Regular.ttf');
+    src: url('/fonts/Myriad Pro Regular.ttf');
 }
 
 html,
