@@ -27,7 +27,7 @@ input[type=datetime-local],
 input[type=date],input[type=month],input[type=time],input[type=week],
 input[type=number],input[type=email],input[type=url],input[type=search],
 input[type=tel],input[type=color],
-.uneditable-input{color:#666;outline:0;height:40px;background:#fff;
+.uneditable-input{color:#666;outline:0;background:#fff;
 font-size:14px;line-height:18px;padding:10px 20px;border-radius:4px;
 display:inline-block;vertical-align:middle;-webkit-box-shadow:none;
 box-shadow:none;border:1px solid #dbdbdb;text-transform:capitalize;

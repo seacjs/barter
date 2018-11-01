@@ -130,7 +130,7 @@ class ProductController extends FrontController
     {
         $this->layout = 'full-width';
         $model = $this->findModel($id);
-        $user = User::find()->with('profile')->where(['id' => $model->id])->one();
+        $user = User::find()->with('profile')->where(['id' => $model->user_id])->one();
         return $this->render('view', [
             'model' => $model,
             'user' => $user,
