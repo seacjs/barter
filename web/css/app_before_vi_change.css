@@ -1,6 +1,6 @@
 @font-face {
     font-family: MyriadProRegular;
-    src: url('../assets/fonts/Myriad Pro Regular.ttf');
+    src: url('/fonts/Myriad Pro Regular.ttf');
 }
 
 html,
@@ -157,15 +157,10 @@ a {
     justify-content: center
 }
 
-.form-group {
-    float: none;
-}
-
 .nav__search .search__input {
     padding-left: 8px;
     width: 100%;
     border: none;
-    outline: none;
 }
 
 .nav__search .search__go {
@@ -577,9 +572,7 @@ a {
     flex-direction: row;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
-    justify-content: center;
-    margin-left: 9px;
-    margin-right: 9px;
+    justify-content: center
 }
 
 .cab-main__search form {
@@ -599,6 +592,8 @@ a {
 .cab-main__search .search__input {
     width: 288px;
     border: none;
+    margin-left: 9px;
+    margin-right: 9px
 }
 
 .cab-main__search .search__go {
@@ -692,12 +687,7 @@ a {
     color: white;
     height: 23px;
     font-size: 0.75em;
-    width: 126px;
-    line-height: 2;
-}
-
-a .cab-main__button {
-    padding-left: 3%;
+    width: 126px
 }
 
 .cab-main__button--photo {
@@ -713,7 +703,7 @@ a .cab-main__button {
 .cab-main__data-block {
     margin-bottom: 15px;
     background: white;
-    padding-bottom: 5px;
+    height: 280px;
     border-radius: 4px;
     display: -ms-flex;
     display: -webkit-box;
@@ -1489,8 +1479,7 @@ a .cab-main__button {
 .partner-profile__photo {
     position: relative;
     width: 200px;
-    height: 300px;
-    object-fit: contain;
+    height: 300px
 }
 
 .partner-profile__rating {
@@ -3411,7 +3400,7 @@ a .cab-main__button {
 .add-goods__category {
     border: 1px solid #dadada;
     border-radius: 4px;
-    width: calc(100% - 20px);
+    width: 100%;
     margin-bottom: 20px;
     font-family: 'MyriadProRegular', sans-serif;
     color: #777;
@@ -4049,7 +4038,7 @@ ul,
     color: #666;
 }
 
-.product-detailed__video z {
+.product-detailed__video iframe {
     width: 90%;
     margin-left: 10%;
 }
