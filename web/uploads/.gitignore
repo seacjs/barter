@@ -1,2 +1,8 @@
-*
+.*
+# ignore files in folder foo
+images/*
+thumbnails/*
+# but keep the folder
+!images/.gitkeep
+!thumbnails/.gitkeep
 !.gitignore

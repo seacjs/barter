@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 use app\assets\DublAsset;
-DublAsset::register($this);
+//DublAsset::register($this);
 
 ?>
 

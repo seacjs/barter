@@ -187,6 +187,11 @@ class ProductController extends FrontController
         $fileModel->multiple = true;
         $fileModel->files = $model->files;
 
+        if(Yii::$app->request->isPost){
+            VarDumper::dump(Yii::$app->request->post(),10,1);die;
+        }
+
+
         if ($model->load($post) && (!isset($post['DynamicModel']) || $model->optionModel->load($post)) && $model->save() && $model->saveOptions()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
 

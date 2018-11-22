@@ -7,7 +7,7 @@ use kartik\file\FileInput;
 
 use app\assets\DublAsset;
 if(!$model->isNewRecord) {
-    DublAsset::register($this);
+    //DublAsset::register($this);
 }
 
 /* @var $this yii\web\View */
@@ -172,6 +172,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
 <!--            </div>-->
 
             <?= $form->field($model, 'price', [
+                'options' => ['tag' => false],
                 'template' => '<div class="add-goods__price">{label}{input}<img src="/images/icons/bal-blue.png" alt="" class="">{error}{hint}</div>',
             ])->textInput([
                 'maxlength' => true,

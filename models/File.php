@@ -10,6 +10,7 @@ use yii\imagine\Image;
 use yii\web\UploadedFile;
 use Imagine\Image\Point;
 use Imagine\Image\Box;
+use yii\web\View;
 
 /**
  * This is the model class for table "{{%file_storage_item}}".
@@ -266,6 +267,8 @@ class File extends ActiveRecord
                 'id' => 'file-input-widget',
             ],
             'pluginOptions' => [
+                //            ['fa', 'fas', 'gly', 'explorer', 'explorer-fa', 'explorer-fas'];
+//                'theme' => 'explorer-fas',
                 'resizeImage' => true,
                 'maxImageWidth' => 5800,
                 'maxImageHeight' => 5800,
@@ -293,10 +296,13 @@ class File extends ActiveRecord
                 'showRemove' => false,
                 'showClose' => false,
                 'layoutTemplates' => [
-                    'footer' => '<div class="file-thumbnail-footer">
-                    <div class="file-footer-caption" style="width:{width}">{caption}</div>{progress}<hr> {actions}</div>',
-
-                ]
+                    'main1' => (new View())->renderAjax('@app/views/photoblock/_template'),
+                    'preview' => (new View())->renderAjax('@app/views/photoblock/_preview'),
+                    'btnDefault' => (new View())->renderAjax('@app/views/photoblock/_btnDefault'),
+                    'btnBrowse' => (new View())->renderAjax('@app/views/photoblock/_btnBrowse'),
+                    'footer' => (new View())->renderAjax('@app/views/photoblock/_footer'),
+                    'caption' => (new View())->renderAjax('@app/views/photoblock/_caption'),
+                ],
             ],
             'pluginEvents' => [
                 'fileimagesresized' => new \yii\web\JsExpression('function(event){$("#file-input-widget").fileinput("upload")}'),
