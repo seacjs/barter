@@ -16,6 +16,11 @@ class SignupForm extends Model
     public $repeatPassword;
     public $confirmTerms = false;
 
+    public $name;
+    public $surname;
+    public $second_name;
+
+
     public $complited = false;
 
     /**
@@ -37,6 +42,14 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['name', 'required'],
+            ['surname', 'required'],
+            ['second_name', 'required'],
+
+            ['name', 'string'],
+            ['surname', 'string'],
+            ['second_name', 'string'],
 
 //            ['repeatPassword', 'required'],
 //            ['repeatPassword', 'string'],
@@ -70,6 +83,12 @@ class SignupForm extends Model
             $auth->assign($userRole, $user->getId());
 
             $this->sendEmailConfirmationCode($user);
+
+            $profile = $user->profile;
+            $profile->name = $this->name;
+            $profile->surname = $this->surname;
+            $profile->second_name = $this->second_name;
+            $profile->save();
 
             Yii::$app->session->addFlash('signup', 'Вы зарегистрированы, на ваш email отправлено письмо для подтверждения регистрации.');
             return $user;

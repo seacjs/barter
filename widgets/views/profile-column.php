@@ -6,7 +6,7 @@ use yii\bootstrap\Html;
 
 
 <div class="profile">
-    <div class="profile__name"><?=$user->name?> <?=$user->second_name?></div>
+    <div class="profile__name"><?=$user->profile->name?> <?=$user->profile->second_name?></div>
     <div class="profile__image">
         <img src="<?=$user->avatar?>" alt="" class="profile__photo">
     </div>

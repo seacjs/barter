@@ -29,6 +29,37 @@ use yii\bootstrap\Html;
             'autofocus' => false,
         ]) ?>
 
+        <hr>
+        <?= $form->field($signUpFormModel, 'name',[
+            'options' => [
+                'class' => 'form-group tg-inputwithicon',
+            ],
+            'template' => "<i class=\"icon-user\"></i>{input}\n{error}",
+        ])->textInput([
+            'placeholder' => "Введите ваше имя",
+            'autofocus' => false,
+        ]) ?>
+        <?= $form->field($signUpFormModel, 'second_name',[
+            'options' => [
+                'class' => 'form-group tg-inputwithicon',
+            ],
+            'template' => "<i class=\"icon-user\"></i>{input}\n{error}",
+        ])->textInput([
+            'placeholder' => "Введите ваше отчество",
+            'autofocus' => false,
+        ]) ?>
+        <?= $form->field($signUpFormModel, 'surname',[
+            'options' => [
+                'class' => 'form-group tg-inputwithicon',
+            ],
+            'template' => "<i class=\"icon-user\"></i>{input}\n{error}",
+        ])->textInput([
+            'placeholder' => "Введите вашу фамилию",
+            'autofocus' => false,
+        ]) ?>
+
+        <hr>
+
         <?= $form->field($signUpFormModel, 'email',[
             'options' => [
                 'class' => 'form-group tg-inputwithicon',
