@@ -6,6 +6,7 @@ use app\actions\FileDeleteAction;
 use app\actions\FileSortAction;
 use app\actions\FileUploadAction;
 use app\models\File;
+use app\models\FileCrutch;
 use app\models\MoneyTransaction;
 use app\models\Product;
 use app\models\ProductGoods;
@@ -16,6 +17,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
+use yii\web\Response;
 
 
 class ProfileController extends FrontController
@@ -119,9 +121,14 @@ class ProfileController extends FrontController
         }
         $model = $user->profile;
 
+        $post = Yii::$app->request->post();
+
+//            VarDumper::dump($post,10,1);die;
+
+
         $fileModel = new File();
         $fileModel->multiple = false;
-        $fileModel->files = $user->files;
+//        $fileModel->files = $user->files;
 
 
 
@@ -129,6 +136,14 @@ class ProfileController extends FrontController
             'user' => $user,
             'fileModel' => $fileModel
         ]);
+    }
+
+    public function actionUploadAvatar()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+
+        return json_encode('111');
     }
 
 

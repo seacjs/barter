@@ -32,7 +32,7 @@ use yii\web\View;
  * @property integer $created_at
  * @property integer $component_id
  */
-class File extends ActiveRecord
+class FileCrutch extends ActiveRecord
 {
 
     public $files;
@@ -71,6 +71,7 @@ class File extends ActiveRecord
         return '{{%file}}';
     }
 
+//    this is crutch
     public function behaviors()
     {
         return [
