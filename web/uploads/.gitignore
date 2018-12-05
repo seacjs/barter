@@ -2,7 +2,9 @@
 # ignore files in folder foo
 images/*
 thumbnails/*
+crop/*
 # but keep the folder
 !images/.gitkeep
 !thumbnails/.gitkeep
+!crop/.gitkeep
 !.gitignore
