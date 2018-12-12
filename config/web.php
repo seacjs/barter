@@ -88,6 +88,7 @@ $config = [
 
                 '/user/transaction/<id>' => 'user/transaction',
                 '/user/view/<id>' => 'user/view',
+                '/user' => 'user/index',
 
                 '/news/view/<id>' => 'news/view',
 

@@ -18,8 +18,65 @@ $script = <<< JS
     $("#my-or-new-address .fa-angle-down").on("click", function() {
         $(this).parent().next().toggle(50);
     });
+
+    $('#file-input').change(function() {
+        console.log('file-input: change');
+        if($('#file-input').val() == '') {
+            return;
+        }
+        setTimeout(function() {
+           loadFile();  
+           $('#file-input').val('');
+        },500);
+        
+        // $('#file-input').val('');
+    });
+
+
+JS;
+$script2 = <<< JS
+    // $(document).ready(function(){
+    //     $("#productform").ajaxForm({
+    //         url: '/product/file-upload',
+    //         type: 'post',
+    //         done: function(data) {
+    //           console.log(data);
+    //         }
+    //     });
+    // });
+
+    var loadFile = function() {
+        var formData = new FormData(document.forms.productform);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/product/file-upload", false);
+        xhr.send(formData);
+        var sendResult;
+        if(xhr.status == 200) {
+      
+            var sendResult = JSON.parse(xhr.responseText);
+            // sendResult = JSON.parse(sendResult);
+            console.log(sendResult);
+           // if(sendResult.error == false) {
+               // initialPreview
+                for(var i = 0; i < sendResult.initialPreview.length; i++) {
+                    console.log('initialPreview',sendResult.initialPreview[i]);
+                    var style = 'background: url('+sendResult.initialPreview[i]+') no-repeat center; background-size: cover;';
+                        var file = '<div class="add-goods__photo" style="'+style+'">\
+                            <label class="container">\
+                                <input type="checkbox">\
+                                <span class="checkmark"></span>\
+                            </label>\
+                        </div>';
+                }
+                $('.add-goods__photos').append(file);
+                
+                // $("#refreshImagesButton").click();
+            //}
+        }
+    };
 JS;
 $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
+$this->registerJs($script2, yii\web\View::POS_HEAD);
 
 ?>
 
@@ -29,14 +86,18 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
         <?php echo \app\widgets\UserSearchWidget::widget()?>
     </div>
 
-
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'productform'
+    ]); ?>
 
     <div class="add-goods__title"> <?= $model->isNewRecord ? 'Добавление товара' : 'Редактирование товара' ?></div>
     <div class="add-goods__content">
 
         <!-- LEFT COLUMN -->
         <div class="add-goods__left-part">
+<!--            --><?php //$form = ActiveForm::begin([
+//                'id' => 'product-form'
+//            ]); ?>
 
             <?= $form->field($model, 'name')->textInput([
                 'maxlength' => true,
@@ -95,6 +156,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
                     $modelName = $modelName[count($modelName)-1];
                     $model->addressRadioButton = ($model->addressRadioButton == 'new' && trim($model->address) == '') ? 'my' : 'new';
                 ?>
+
                 <div class="add-goods__region-list">
                     <span><label for="delivery-russia">Мой адрес</label>
                         <div class="label-holder">
@@ -119,7 +181,6 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
             </div>
 
 
-
             <div class="add-goods__discription">
                 <?= $form->field($model, 'content')->textarea([
                     'rows' => 6,
@@ -131,6 +192,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
 
         </div>
 
+
         <!-- RIGHT COLUMN -->
         <div class="add-goods__right-part">
 
@@ -138,31 +200,45 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
 
             <div>
                 <?php if(!$model->isNewRecord): ?>
-                    <?php echo  $form->field($fileModel, 'files[]')->widget(FileInput::class, \app\models\File::initialOptions($fileModel, $model));?>
+<!--                    --><?php //echo  $form->field($fileModel, 'files[]')->widget(FileInput::class, \app\models\File::initialOptions($fileModel, $model));?>
                 <?php endif ?>
             </div>
 
-            <div class="add-goods__photo-block " style="display:none;">
+                <div class="add-goods__photo-block">
+                    <div class="add-goods__photo-title">Выберете фото товара</div>
+                    <div class="add-goods__photo-button" style="position:relative;overflow: hidden;">
+                        Загрузить
+                        <?php echo $form->field($fileModel, 'files[]')->fileInput([
+                            'class' => '',
+                            'id' => 'file-input',
+                            'style' => 'width: 100%; height:100%; opacity:0; position:absolute;top:0px;left:0px;',
+//                            'onchange' => 'loadFile(event)',
+                            'multiple' => true,
+                            'accept' => 'image/*'
+                        ])->label(false); ?>
 
-                <div class="add-goods__photo-title">Выберете фото товара</div>
+                        <input type="hidden" value="<?=$model::className()?>" name="model">
+                        <input type="hidden" value="product_goods" name="component">
+                        <input type="hidden" value="true" name="multiple">
+                        <input type="hidden" value="<?=$model->id?>" name="component_id">
 
+                    </div>
 
-                <button class="add-goods__photo-button">Загрузить</button>
-                <p class="add-goods__photo-text">Максимальный размер 2Mb</p>
-<!--                <div class="add-goods__photos">-->
-<!--                    <div class="add-goods__photo">-->
-<!--                        <i class="fa fa-square-o" aria-hidden="true"></i>-->
-<!--                    </div>-->
-<!--                    <div class="add-goods__photo">-->
-<!--                        <i class="fa fa-check-square-o" aria-hidden="true"></i>-->
-<!--                    </div>-->
-<!--                    <div class="add-goods__photo">-->
-<!--                        <i class="fa fa-square-o" aria-hidden="true"></i>-->
-<!--                    </div>-->
-<!--                </div>-->
+                    <input type="hidden" value="<?=$model->id?>" name="id">
+                    <p class="add-goods__photo-text">Максимальный размер 2Mb</p>
+                    <div class="add-goods__photos">
 
+                        <?php foreach($model->files as $file):?>
+                        <div class="add-goods__photo" style="background: url(<?=$file->image?>) no-repeat center; background-size: cover;">
+                            <label class="container">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <?php endforeach?>
 
-            </div>
+                    </div>
+                </div>
 
             <?php endif ?>
 
@@ -172,6 +248,7 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
 <!--            </div>-->
 
             <?= $form->field($model, 'price', [
+                'form' => $form,
                 'options' => ['tag' => false],
                 'template' => '<div class="add-goods__price">{label}{input}<img src="/images/icons/bal-blue.png" alt="" class="">{error}{hint}</div>',
             ])->textInput([
@@ -202,18 +279,18 @@ $this->registerJs($script, yii\web\View::POS_READY,'radio-button-change');
             <?php endif ?>
 
 
-
-            <?= Html::submitButton($model->isNewRecord ? 'Продолжить' : 'Сохранить', ['class' => 'add-goods__save']) ?>
+            <?= Html::submitButton($model->isNewRecord ? 'Продолжить' : 'Сохранить', [
+                'class' => 'add-goods__save',
+                'onclick' => '$("#productform").submit()',
+            ]) ?>
 
         </div>
+
+
     </div>
 
 
-
-
-
     <?php ActiveForm::end(); ?>
-
 
 
 

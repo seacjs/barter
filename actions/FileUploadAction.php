@@ -39,7 +39,6 @@ class FileUploadAction extends Action
     {
 
         $post = Yii::$app->request->post();
-
         if(Yii::$app->request->isPost) {
             $className = $post['model'];
             $model = $className::findOne($post['component_id']);
@@ -60,6 +59,7 @@ class FileUploadAction extends Action
                 $uploadedFile->sort = count($model->mainFiles) + $key;
                 $uploadedFile->save();
             }
+
 
             return json_encode([
                 'initialPreview' => \app\models\File::initialPreview($uploadedFiles),

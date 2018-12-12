@@ -188,7 +188,7 @@ class ProductController extends FrontController
         $fileModel->files = $model->files;
 
         if(Yii::$app->request->isPost){
-            VarDumper::dump(Yii::$app->request->post(),10,1);die;
+           // VarDumper::dump(Yii::$app->request->post(),10,1);die;
         }
 
 
