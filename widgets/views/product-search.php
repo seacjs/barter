@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 //        ],
 //    ]) ?>
 
-    <input type="search" name="name" value="Поиск" class="search__input">
+    <input type="search" name="name" value="" placeholder="Поиск" class="search__input">
     <button class="search__go"><i class="fa fa-search"></i></button>
 
 <?php ActiveForm::end(); ?>

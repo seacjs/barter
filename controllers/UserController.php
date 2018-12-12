@@ -34,15 +34,20 @@ class UserController extends FrontController
                 'class' => AccessControl::class,
                 'only' => ['index','create','view','update','delete'],
                 'rules' => [
-                    [
-                        'actions' => ['index','view','update','users'],
-                        'allow' => true,
-                        'roles' => ['manager','admin','superAdmin'],
-                    ],
+//                    [
+//                        'actions' => ['index','view','update','users'],
+//                        'allow' => true,
+//                        'roles' => ['manager','admin','superAdmin'],
+//                    ],
                     [
                         'actions' => ['create'],
                         'allow' => true,
                         'roles' => ['admin','superAdmin'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -81,6 +86,12 @@ class UserController extends FrontController
                 ]);
                 $query = $query->orWhere([
                     'like', 'profile.name', $post['name']
+                ]);
+                $query = $query->orWhere([
+                    'like', 'profile.surname', $post['name']
+                ]);
+                $query = $query->orWhere([
+                    'like', 'profile.second_name', $post['name']
                 ]);
             }
 

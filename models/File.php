@@ -179,6 +179,7 @@ class File extends ActiveRecord
 
 
                 $post = Yii::$app->request->post();
+
                 if(isset($post['File']['files'][0])) {
                     $path = Yii::getAlias('@webroot/'.$this->imagesPath . $fileModel->name . '.' . $file->extension);
                     $image = Image::getImagine()->open($path);
@@ -186,13 +187,15 @@ class File extends ActiveRecord
                     $path = Yii::getAlias('@webroot/'.$this->imagesCropPath . $fileModel->name . '.' . $file->extension);
                     $crop = explode('-', $post['File']['files'][0]);
                     $size = $image->getSize();
-                    foreach($crop as $ind => $cr) {
-                        $crop[$ind] = round($crop[$ind] * ($ind%2 == 0 ? $size->getWidth() : $size->getHeight())/100);
+                    if(count($crop) > 1) {
+                        foreach ($crop as $ind => $cr) {
+                            $crop[$ind] = round($crop[$ind] * ($ind % 2 == 0 ? $size->getWidth() : $size->getHeight()) / 100);
+                        }
+                        $image->crop(
+                            new Point($crop[0], $crop[1]),
+                            new Box($crop[2] - $crop[0], $crop[3] - $crop[1])
+                        )->save($path);
                     }
-                    $image->crop(
-                        new Point($crop[0], $crop[1]),
-                        new Box($crop[2] - $crop[0], $crop[3] - $crop[1])
-                    )->save($path);
                 }
 
 
