@@ -45,7 +45,7 @@ class UserController extends FrontController
                         'roles' => ['admin','superAdmin'],
                     ],
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'view', 'transaction'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -101,7 +101,7 @@ class UserController extends FrontController
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 20,
             ],
         ]);
 
