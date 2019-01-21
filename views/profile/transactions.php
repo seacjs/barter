@@ -58,8 +58,8 @@
 
         <?php foreach($incomeTransactions as $transaction): ?>
             <div class="message__block">
-
-                <?php if($transaction->user_from == null):?>
+<!--                if($transacrion->user_from == null)-->
+                <?php if($transaction->from_id == null):?>
                     от администратора системы
                 <?php else: ?>
                     <div class="message__partner">
